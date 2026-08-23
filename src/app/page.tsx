@@ -6,7 +6,6 @@ import CountdownSection from '@/components/sections/CountdownSection';
 import ItinerarySection from '@/components/sections/ItinerarySection';
 import GallerySection from '@/components/sections/GallerySection';
 import LetterSection from '@/components/sections/LetterSection';
-import RsvpSection from '@/components/sections/RsvpSection';
 import MusicPlayer from '@/components/MusicPlayer';
 import { HERO_DATA } from '@/data/birthdayData';
 import { Heart } from 'lucide-react';
@@ -15,10 +14,8 @@ export default function Home() {
   const [autoPlayAudio, setAutoPlayAudio] = useState(false);
 
   const handleExploreClick = () => {
-    // Enable audio autoplay
     setAutoPlayAudio(true);
 
-    // Smooth scroll down to countdown section
     const countdownEl = document.getElementById('countdown-section');
     if (countdownEl) {
       countdownEl.scrollIntoView({ behavior: 'smooth' });
@@ -36,7 +33,7 @@ export default function Home() {
       {/* Section 01: Hero Teaser */}
       <HeroSection onExploreClick={handleExploreClick} />
 
-      {/* Section 02: Countdown to 25/8 */}
+      {/* Section 02: Countdown to 25/8 & Hanoi Live Weather */}
       <CountdownSection />
 
       {/* Section 03: Interactive Itinerary */}
@@ -45,11 +42,8 @@ export default function Home() {
       {/* Section 04: Memories Gallery */}
       <GallerySection />
 
-      {/* Section 05: Letter From Heart */}
+      {/* Section 05: Combined Letter from Heart & RSVP */}
       <LetterSection />
-
-      {/* Section 06: RSVP & Call To Action */}
-      <RsvpSection />
 
       {/* Footer */}
       <footer className="py-10 bg-darkWine text-white text-center border-t border-white/10">

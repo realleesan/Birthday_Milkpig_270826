@@ -28,6 +28,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
   
   const [loadingProgress, setLoadingProgress] = useState<number>(0);
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [currentFrameNum, setCurrentFrameNum] = useState<number>(1);
 
   // Get Frame URL pattern
   const getFrameUrl = (index: number) => {
@@ -35,7 +36,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     return `/frames/ezgif-frame-${frameNum}.jpg`;
   };
 
-  // Render a specific frame on canvas with contain fit
+  // Render a specific frame on canvas filling full screen (object-fit: cover)
   const renderFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -45,14 +46,14 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     const img = imagesRef.current[index];
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
-    // Set high-DPI canvas dimensions
+    // Get current window/canvas dimensions
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
     // Clear canvas
     ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
-    // Calculate aspect-fit (object-fit: contain) centering
+    // Calculate aspect-fill (object-fit: cover) so it covers full screen
     const imgAspect = img.naturalWidth / img.naturalHeight;
     const canvasAspect = canvasWidth / canvasHeight;
 
@@ -62,20 +63,36 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     let offsetY = 0;
 
     if (imgAspect > canvasAspect) {
-      drawHeight = canvasWidth / imgAspect;
-      offsetY = (canvasHeight - drawHeight) / 2;
-    } else {
       drawWidth = canvasHeight * imgAspect;
       offsetX = (canvasWidth - drawWidth) / 2;
+    } else {
+      drawHeight = canvasWidth / imgAspect;
+      offsetY = (canvasHeight - drawHeight) / 2;
     }
 
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+    setCurrentFrameNum(index + 1);
   }, []);
+
+  // Update canvas resolution dynamically on window resize
+  const updateCanvasSize = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    renderFrame(currentFrameRef.current);
+  }, [renderFrame]);
 
   // 1. Preload 80 images into RAM array
   useEffect(() => {
     let loadedCount = 0;
     const images: HTMLImageElement[] = [];
+
+    // Set initial canvas resolution
+    if (canvasRef.current) {
+      canvasRef.current.width = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
+    }
 
     for (let i = 0; i < TOTAL_FRAMES; i++) {
       const img = new Image();
@@ -86,7 +103,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
         const progress = Math.round((loadedCount / TOTAL_FRAMES) * 100);
         setLoadingProgress(progress);
 
-        // Immediately render frame 0 as soon as it loads
+        // Render frame 0 as preview as soon as loaded
         if (i === 0) {
           renderFrame(0);
         }
@@ -112,7 +129,6 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     imagesRef.current = images;
 
     return () => {
-      // Memory cleanup: release image references
       imagesRef.current = [];
     };
   }, [renderFrame]);
@@ -121,7 +137,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
   useEffect(() => {
     if (!triggerRef.current || !pinnedRef.current) return;
 
-    const frameObj = { frame: 0 };
+    updateCanvasSize();
 
     const st = ScrollTrigger.create({
       trigger: triggerRef.current,
@@ -141,12 +157,11 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
       },
     });
 
-    // Handle Window Resize Debounced
     let resizeTimeout: NodeJS.Timeout;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
       resizeTimeout = setTimeout(() => {
-        renderFrame(currentFrameRef.current);
+        updateCanvasSize();
         ScrollTrigger.refresh();
       }, 150);
     };
@@ -156,165 +171,157 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     return () => {
       window.removeEventListener('resize', handleResize);
       clearTimeout(resizeTimeout);
-      st.kill(); // Kill ScrollTrigger instance on unmount
+      st.kill();
     };
-  }, [renderFrame]);
+  }, [renderFrame, updateCanvasSize]);
 
   return (
-    <div ref={triggerRef} className="relative w-full h-[300vh] bg-romantic-gradient">
-      {/* Pinned Sticky Hero Section Container */}
+    <div ref={triggerRef} className="relative w-full h-[300vh] bg-darkWine">
+      {/* Pinned Fullscreen Sticky Hero Container */}
       <div
         ref={pinnedRef}
-        className="w-full h-screen sticky top-0 left-0 flex flex-col justify-center items-center overflow-hidden px-4 py-8"
+        className="w-full h-screen sticky top-0 left-0 flex flex-col items-center justify-center overflow-hidden"
       >
-        {/* Background Glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-hero-glow rounded-full blur-3xl pointer-events-none"></div>
+        {/* Fullscreen 2D Canvas Image Sequence Background */}
+        <canvas
+          ref={canvasRef}
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+        />
 
-        {/* Floating Heart Decorations */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Gradient Overlay Vignette for High Text Legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-darkWine/60 via-darkWine/35 to-darkWine/70 z-10 pointer-events-none"></div>
+
+        {/* Floating Heart Decor */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-10">
           <motion.div
             animate={{ y: [-10, 15, -10], rotate: [0, 5, -5, 0] }}
             transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-12 left-[8%] text-romantic-300/40"
+            className="absolute top-16 left-[8%] text-romantic-200/50"
           >
-            <Heart className="w-10 h-10 fill-current" />
+            <Heart className="w-12 h-12 fill-current" />
           </motion.div>
           <motion.div
             animate={{ y: [15, -10, 15], rotate: [0, -8, 8, 0] }}
             transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute top-28 right-[10%] text-romantic-400/30"
+            className="absolute top-28 right-[10%] text-romantic-300/40"
           >
-            <Heart className="w-14 h-14 fill-current" />
+            <Heart className="w-16 h-16 fill-current" />
           </motion.div>
         </div>
 
-        {/* Loading Progress Bar Overlay (While Preloading Images) */}
+        {/* Loading Progress Bar Overlay */}
         <AnimatePresence>
           {!isLoaded && (
             <motion.div
               initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute top-4 right-4 z-50 flex items-center gap-2 bg-darkWine/80 backdrop-blur-md text-white text-xs px-4 py-2 rounded-full border border-romantic-300/30 shadow-lg"
+              className="absolute top-6 right-6 z-50 flex items-center gap-2 bg-darkWine/90 backdrop-blur-md text-white text-xs px-4 py-2 rounded-full border border-romantic-300/40 shadow-2xl"
             >
-              <Loader2 className="w-3.5 h-3.5 text-romantic-400 animate-spin" />
-              <span>Đang tải mượt 80 frames ({loadingProgress}%)</span>
+              <Loader2 className="w-4 h-4 text-romantic-400 animate-spin" />
+              <span>Đang nạp 80 frames ({loadingProgress}%)</span>
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* Main Content Layout: 2 Columns on Desktop, Stacked on Mobile */}
-        <div className="relative z-10 max-w-6xl w-full mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 items-center h-full">
-          
-          {/* Left Column: Hero Typography & CTA */}
-          <div className="flex flex-col items-center md:items-start text-center md:text-left justify-center">
-            {/* Badge */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full glass-card border border-romantic-200 text-romantic-700 text-xs sm:text-sm font-semibold mb-4 shadow-sm"
-            >
-              <Sparkles className="w-4 h-4 text-romantic-500 animate-pulse" />
-              <span>{HERO_DATA.ageTitle}</span>
-              <Sparkles className="w-4 h-4 text-romantic-500 animate-pulse" />
-            </motion.div>
+        {/* Hero Overlay Content (Centered Over Canvas) */}
+        <div className="relative z-20 max-w-4xl w-full mx-auto px-4 text-center flex flex-col items-center justify-center my-auto">
+          {/* Top Badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-card-dark text-romantic-200 text-xs sm:text-sm font-semibold mb-6 shadow-2xl backdrop-blur-md border border-white/20"
+          >
+            <Sparkles className="w-4 h-4 text-romantic-400 animate-pulse" />
+            <span>{HERO_DATA.ageTitle}</span>
+            <Sparkles className="w-4 h-4 text-romantic-400 animate-pulse" />
+          </motion.div>
 
-            {/* Title */}
-            <motion.h1
-              initial={{ opacity: 0, y: 25 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, delay: 0.2 }}
-              className="font-serif text-3xl sm:text-5xl lg:text-6xl text-darkWine font-bold leading-tight tracking-tight mb-4"
-            >
-              Happy Birthday <br />
-              <span className="bg-gradient-to-r from-romantic-600 via-romantic-500 to-roseGold bg-clip-text text-transparent italic font-cursive font-normal text-4xl sm:text-6xl lg:text-7xl">
-                {HERO_DATA.recipientName}
-              </span>
-            </motion.h1>
+          {/* Main Title */}
+          <motion.h1
+            initial={{ opacity: 0, y: 25 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-bold leading-tight tracking-tight mb-6 drop-shadow-2xl"
+          >
+            Happy Birthday <br />
+            <span className="bg-gradient-to-r from-romantic-300 via-romantic-200 to-champagne-gold bg-clip-text text-transparent italic font-cursive font-normal text-5xl sm:text-7xl md:text-8xl lg:text-9xl">
+              {HERO_DATA.recipientName}
+            </span>
+          </motion.h1>
 
-            {/* Date Badges */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.8, delay: 0.4 }}
-              className="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-6 text-xs sm:text-sm"
-            >
-              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-card text-romantic-800 shadow-sm border border-romantic-200">
-                <Cake className="w-4 h-4 text-romantic-500" />
-                <span className="font-semibold">Sinh Nhật:</span>
-                <span className="text-romantic-600 font-bold">{HERO_DATA.birthDateDisplay}</span>
-              </div>
-
-              <div className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl glass-card text-darkWine shadow-sm border border-champagne/40 bg-champagne-light/50">
-                <Calendar className="w-4 h-4 text-champagne-gold" />
-                <span className="font-semibold">Hẹn Hò Sớm:</span>
-                <span className="text-romantic-700 font-bold">{HERO_DATA.dateEventDisplay}</span>
-              </div>
-            </motion.div>
-
-            {/* Subheading */}
-            <motion.p
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.5 }}
-              className="text-romantic-800 text-sm sm:text-base max-w-md mb-8 leading-relaxed font-sans"
-            >
-              {HERO_DATA.subheading}
-            </motion.p>
-
-            {/* Explore Button */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col items-center md:items-start"
-            >
-              <motion.button
-                whileHover={{ scale: 1.05, boxShadow: '0 15px 30px rgba(230, 30, 78, 0.35)' }}
-                whileTap={{ scale: 0.98 }}
-                onClick={onExploreClick}
-                className="group relative px-7 py-3.5 rounded-full bg-gradient-to-r from-romantic-500 to-romantic-600 text-white font-semibold text-sm sm:text-base shadow-romantic-glow flex items-center gap-3 overflow-hidden"
-              >
-                <span className="relative z-10 flex items-center gap-2">
-                  Khám Phá Bí Mật
-                  <Heart className="w-4 h-4 fill-white text-white group-hover:scale-125 transition-transform" />
-                </span>
-                <span className="absolute inset-0 bg-gradient-to-r from-romantic-600 to-roseGold opacity-0 group-hover:opacity-100 transition-opacity"></span>
-              </motion.button>
-
-              <p className="mt-2.5 text-[11px] text-romantic-500 italic">
-                *Cuộn trang hoặc bấm nút để quay mượt 80 frame & mở nhạc
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Right Column: Interactive Apple AirPods-Style 2D Canvas Image Sequence */}
-          <div className="flex items-center justify-center relative w-full h-[280px] sm:h-[380px] md:h-[480px]">
-            <div className="relative w-full h-full max-w-[480px] max-h-[480px] rounded-3xl glass-card border border-romantic-200/80 shadow-2xl p-3 flex items-center justify-center overflow-hidden">
-              <canvas
-                ref={canvasRef}
-                width={1080}
-                height={1080}
-                className="w-full h-full object-contain rounded-2xl"
-              />
-              <div className="absolute bottom-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full bg-darkWine/75 backdrop-blur-md text-white text-[10px] font-mono tracking-wider">
-                SCROLL TO ANIMATE • FRAME {currentFrameRef.current + 1}/80
-              </div>
+          {/* Date Badges Container */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-8 text-xs sm:text-base"
+          >
+            <div className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-card-dark text-white shadow-lg border border-romantic-300/30">
+              <Cake className="w-4 h-4 text-romantic-400" />
+              <span className="font-semibold text-romantic-200">Sinh Nhật:</span>
+              <span className="text-romantic-300 font-bold">{HERO_DATA.birthDateDisplay}</span>
             </div>
-          </div>
 
+            <div className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-card-dark text-white shadow-lg border border-champagne-gold/40">
+              <Calendar className="w-4 h-4 text-champagne-gold" />
+              <span className="font-semibold text-romantic-200">Hẹn Hò Sớm:</span>
+              <span className="text-champagne-gold font-bold">{HERO_DATA.dateEventDisplay}</span>
+            </div>
+          </motion.div>
+
+          {/* Subheading */}
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="text-romantic-100/90 text-sm sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-sans drop-shadow"
+          >
+            {HERO_DATA.subheading}
+          </motion.p>
+
+          {/* Explore Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col items-center"
+          >
+            <motion.button
+              whileHover={{ scale: 1.06, boxShadow: '0 20px 40px rgba(255, 59, 102, 0.5)' }}
+              whileTap={{ scale: 0.96 }}
+              onClick={onExploreClick}
+              className="group relative px-9 py-4 rounded-full bg-gradient-to-r from-romantic-500 via-romantic-600 to-roseGold text-white font-bold text-base sm:text-lg shadow-romantic-glow flex items-center gap-3 overflow-hidden border border-white/20"
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Khám Phá Bí Mật
+                <Heart className="w-5 h-5 fill-white text-white group-hover:scale-125 transition-transform" />
+              </span>
+              <span className="absolute inset-0 bg-gradient-to-r from-romantic-600 to-champagne-gold opacity-0 group-hover:opacity-100 transition-opacity"></span>
+            </motion.button>
+
+            <p className="mt-3 text-xs text-romantic-300/80 italic drop-shadow">
+              *Cuộn trang để thưởng thức hiệu ứng 80 frame & mở nhạc
+            </p>
+          </motion.div>
         </div>
 
-        {/* Scroll Down Indicator */}
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-4 left-1/2 -translate-x-1/2 text-romantic-400 cursor-pointer flex flex-col items-center gap-1"
-          onClick={onExploreClick}
-        >
-          <span className="text-[10px] uppercase font-bold tracking-widest text-romantic-500">Cuộn Chuột</span>
-          <ChevronDown className="w-5 h-5" />
-        </motion.div>
+        {/* Bottom Frame Badge & Down Arrow */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 pointer-events-auto">
+          <div className="px-3 py-1 rounded-full bg-darkWine/80 backdrop-blur-md text-romantic-300 text-[11px] font-mono tracking-widest border border-white/10 shadow-lg">
+            FRAME {currentFrameNum}/80
+          </div>
+
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 2, repeat: Infinity }}
+            className="text-romantic-300 cursor-pointer p-1"
+            onClick={onExploreClick}
+          >
+            <ChevronDown className="w-6 h-6" />
+          </motion.div>
+        </div>
+
       </div>
     </div>
   );

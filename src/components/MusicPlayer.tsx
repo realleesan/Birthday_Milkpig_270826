@@ -10,50 +10,44 @@ interface MusicPlayerProps {
 
 export default function MusicPlayer({ audioUrl, autoPlayTrigger = false }: MusicPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const hasPlayedRef = useRef<boolean>(false);
+  const isPlayingRef = useRef<boolean>(false);
 
-  const playAudio = () => {
-    if (audioRef.current && !hasPlayedRef.current) {
+  const startPlayback = () => {
+    if (audioRef.current && !isPlayingRef.current) {
       audioRef.current.play().then(() => {
-        hasPlayedRef.current = true;
+        isPlayingRef.current = true;
       }).catch(err => {
-        console.log('Autoplay waiting for user interaction:', err);
+        // Suppress browser autoplay warning logs
       });
     }
   };
 
-  // 1. Trigger when autoPlayTrigger prop is activated
+  // Trigger when autoPlayTrigger prop updates
   useEffect(() => {
     if (autoPlayTrigger) {
-      playAudio();
+      startPlayback();
     }
   }, [autoPlayTrigger]);
 
-  // 2. Global user interaction listener to unlock audio on first scroll / click / touch
+  // Attach immediate user gesture listeners (click, touchstart, pointerdown) to unlock audio
   useEffect(() => {
-    const handleFirstUserInteraction = () => {
-      if (audioRef.current && hasPlayedRef.current) return;
-      
-      if (audioRef.current) {
-        audioRef.current.play().then(() => {
-          hasPlayedRef.current = true;
-          window.removeEventListener('scroll', handleFirstUserInteraction);
-          window.removeEventListener('click', handleFirstUserInteraction);
-          window.removeEventListener('touchstart', handleFirstUserInteraction);
-        }).catch(() => {
-          // Keep listening until browser allows play
-        });
+    const handleGesture = () => {
+      startPlayback();
+      if (isPlayingRef.current) {
+        window.removeEventListener('pointerdown', handleGesture);
+        window.removeEventListener('click', handleGesture);
+        window.removeEventListener('touchstart', handleGesture);
       }
     };
 
-    window.addEventListener('scroll', handleFirstUserInteraction, { passive: true });
-    window.addEventListener('click', handleFirstUserInteraction);
-    window.addEventListener('touchstart', handleFirstUserInteraction);
+    window.addEventListener('pointerdown', handleGesture, { once: false });
+    window.addEventListener('click', handleGesture, { once: false });
+    window.addEventListener('touchstart', handleGesture, { once: false });
 
     return () => {
-      window.removeEventListener('scroll', handleFirstUserInteraction);
-      window.removeEventListener('click', handleFirstUserInteraction);
-      window.removeEventListener('touchstart', handleFirstUserInteraction);
+      window.removeEventListener('pointerdown', handleGesture);
+      window.removeEventListener('click', handleGesture);
+      window.removeEventListener('touchstart', handleGesture);
     };
   }, []);
 

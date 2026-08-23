@@ -27,10 +27,9 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-cream text-darkWine relative">
-      {/* Floating Music Player */}
+      {/* Background Music Player */}
       <MusicPlayer
         audioUrl={HERO_DATA.audioUrl}
-        songTitle={HERO_DATA.audioTitle}
         autoPlayTrigger={autoPlayAudio}
       />
 

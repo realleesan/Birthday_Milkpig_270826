@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 
 interface MusicPlayerProps {
   audioUrl: string;
+  songTitle?: string;
   autoPlayTrigger?: boolean;
 }
 
@@ -21,7 +22,7 @@ export default function MusicPlayer({ audioUrl, autoPlayTrigger = false }: Music
     }
   };
 
-  // 1. Trigger when autoPlayTrigger prop is activated (e.g. scrolling past 80 frames or clicking button)
+  // 1. Trigger when autoPlayTrigger prop is activated
   useEffect(() => {
     if (autoPlayTrigger) {
       playAudio();
@@ -33,11 +34,9 @@ export default function MusicPlayer({ audioUrl, autoPlayTrigger = false }: Music
     const handleFirstUserInteraction = () => {
       if (audioRef.current && hasPlayedRef.current) return;
       
-      // Attempt play on any scroll or touch
       if (audioRef.current) {
         audioRef.current.play().then(() => {
           hasPlayedRef.current = true;
-          // Remove event listeners once playing
           window.removeEventListener('scroll', handleFirstUserInteraction);
           window.removeEventListener('click', handleFirstUserInteraction);
           window.removeEventListener('touchstart', handleFirstUserInteraction);

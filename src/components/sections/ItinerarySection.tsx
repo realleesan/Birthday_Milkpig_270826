@@ -25,14 +25,14 @@ export default function ItinerarySection() {
   return (
     <section id="itinerary-section" className="py-24 px-4 bg-romantic-gradient relative overflow-hidden">
       <div className="max-w-5xl mx-auto">
-        {/* Section Header (Top badge removed) */}
+        {/* Section Header */}
         <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-serif text-3xl sm:text-5xl text-darkWine font-bold mb-4"
+            className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-3 tracking-tight"
           >
             Hành Trình Ngọt Ngào Dành Cho Milkpig
           </motion.h2>
@@ -42,17 +42,15 @@ export default function ItinerarySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
+            className="font-cursive text-xl sm:text-2xl text-romantic-600 font-bold max-w-xl mx-auto"
           >
             Một buổi tối trọn vẹn với từng khoảnh khắc được chuẩn bị tỉ mỉ để tạo nên ký ức đáng nhớ nhất.
           </motion.p>
         </div>
 
-        {/* Rock-solid Responsive Timeline Layout */}
+        {/* Timeline Items */}
         <div className="relative space-y-12 before:absolute before:inset-0 before:left-5 md:before:left-1/2 before:-translate-x-px before:h-full before:w-0.5 before:bg-gradient-to-b before:from-romantic-300 before:via-romantic-400 before:to-roseGold">
           {ITINERARY_DATA.map((item: ItineraryItem, index: number) => {
-            const isEven = index % 2 === 0;
-
             return (
               <motion.div
                 key={item.id}
@@ -89,7 +87,7 @@ export default function ItinerarySection() {
                     <span>{item.time}</span>
                   </div>
 
-                  <h3 className="font-serif text-xl sm:text-2xl text-darkWine font-bold mb-2">
+                  <h3 className="font-cursive text-2xl sm:text-3xl text-darkWine font-bold mb-2">
                     {item.title}
                   </h3>
 

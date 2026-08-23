@@ -103,14 +103,14 @@ export default function CountdownSection() {
   return (
     <section id="countdown-section" className="py-20 px-4 bg-cream relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header (Top badge removed) */}
+        {/* Section Header */}
         <div className="text-center mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-4 tracking-tight"
+            className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-3 tracking-tight"
           >
             Đếm Ngược & Thời Tiết Hà Nội Realtime
           </motion.h2>
@@ -120,7 +120,7 @@ export default function CountdownSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
+            className="font-cursive text-xl sm:text-2xl text-romantic-600 font-bold max-w-xl mx-auto"
           >
             Dữ liệu thời tiết trực tiếp từ trạm khí tượng Hà Nội và đồng hồ đếm ngược ngày hẹn hò.
           </motion.p>
@@ -170,8 +170,8 @@ export default function CountdownSection() {
             </div>
 
             {/* Note Footer */}
-            <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 text-xs font-sans text-romantic-600 font-bold bg-romantic-50/50 p-3 rounded-xl">
-              <Clock className="w-4 h-4 text-romantic-500 animate-pulse" />
+            <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 font-cursive text-base sm:text-lg text-romantic-600 font-bold bg-romantic-50/50 p-3 rounded-xl">
+              <Clock className="w-4 h-4 text-romantic-500 animate-pulse shrink-0" />
               <span>Hẹn gặp Milkpig đúng 17:00 ngày 25.08.2026 💖</span>
             </div>
           </motion.div>
@@ -216,7 +216,7 @@ export default function CountdownSection() {
                           (Cảm giác {weather.feelsLike}°C)
                         </span>
                       </div>
-                      <p className="text-xs sm:text-sm font-sans font-bold text-romantic-700 mt-1">
+                      <p className="text-sm sm:text-base font-cursive font-bold text-romantic-700 mt-1">
                         {weather.description}
                       </p>
                     </div>
@@ -259,8 +259,8 @@ export default function CountdownSection() {
                 </div>
 
                 {/* Note Footer */}
-                <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 text-xs font-sans text-romantic-600 font-bold bg-romantic-100/50 p-3 rounded-xl">
-                  <Heart className="w-4 h-4 text-romantic-500 fill-romantic-400" />
+                <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 font-cursive text-base sm:text-lg text-romantic-600 font-bold bg-romantic-100/50 p-3 rounded-xl">
+                  <Heart className="w-4 h-4 text-romantic-500 fill-romantic-400 shrink-0" />
                   <span>Dữ liệu trực tiếp từ trạm khí tượng Hà Nội Open-Meteo 🍷</span>
                 </div>
               </>

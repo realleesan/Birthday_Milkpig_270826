@@ -48,7 +48,7 @@ export default function LightboxModal({ photo, onClose }: LightboxModalProps) {
 
           {/* Caption Details */}
           <div className="p-6">
-            <div className="flex items-center justify-between text-xs text-romantic-500 font-semibold mb-2">
+            <div className="flex items-center justify-between text-xs font-sans text-romantic-500 font-bold mb-2">
               <span className="flex items-center gap-1">
                 <Calendar className="w-3.5 h-3.5" /> {photo.date}
               </span>
@@ -56,10 +56,10 @@ export default function LightboxModal({ photo, onClose }: LightboxModalProps) {
                 <Heart className="w-3.5 h-3.5 fill-romantic-400" /> Memory
               </span>
             </div>
-            <h3 className="font-serif text-2xl text-darkWine font-bold mb-2">
+            <h3 className="font-cursive text-3xl text-darkWine font-bold mb-2">
               {photo.title}
             </h3>
-            <p className="text-romantic-800 text-sm leading-relaxed font-sans">
+            <p className="text-romantic-800 text-sm sm:text-base leading-relaxed font-sans font-medium">
               {photo.caption}
             </p>
           </div>

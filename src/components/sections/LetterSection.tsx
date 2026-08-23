@@ -44,14 +44,14 @@ export default function LetterSection() {
   return (
     <section id="letter-section" className="py-24 px-4 bg-romantic-gradient relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header (Top badge removed) */}
+        {/* Section Header */}
         <div className="text-center mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-serif text-3xl sm:text-5xl text-darkWine font-bold mb-4"
+            className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-3 tracking-tight"
           >
             Lời Nhắn Nhủ & Lời Hẹn Hò
           </motion.h2>
@@ -61,7 +61,7 @@ export default function LetterSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
+            className="font-cursive text-xl sm:text-2xl text-romantic-600 font-bold max-w-xl mx-auto"
           >
             Mở bức thư tay dành riêng cho Milkpig và phản hồi cho buổi hẹn hò lãng mạn ngày 25/8 nhé!
           </motion.p>
@@ -70,7 +70,7 @@ export default function LetterSection() {
         {/* 2 Column Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           
-          {/* Left Column: Digital Interactive Letter */}
+          {/* Left Column: Digital Interactive Handwritten Letter */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -93,7 +93,7 @@ export default function LetterSection() {
                     <Heart className="w-10 h-10 text-romantic-600 fill-romantic-500 animate-pulse" />
                   </div>
 
-                  <h3 className="font-cursive text-3xl text-darkWine font-bold mb-2">
+                  <h3 className="font-cursive text-3xl sm:text-4xl text-darkWine font-bold mb-2">
                     Gửi: Milkpig 💖
                   </h3>
                   <p className="text-xs font-sans text-romantic-500 italic">
@@ -109,7 +109,7 @@ export default function LetterSection() {
                 </div>
               </motion.div>
             ) : (
-              /* Opened Letter Card */
+              /* Opened Handwritten Letter Card (Dancing Script) */
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -118,7 +118,7 @@ export default function LetterSection() {
               >
                 <div>
                   <div className="flex items-center justify-between pb-4 mb-4 border-b border-romantic-200">
-                    <div className="flex items-center gap-2 text-romantic-600 font-bold font-cursive text-2xl">
+                    <div className="flex items-center gap-2 text-romantic-600 font-bold font-cursive text-2xl sm:text-3xl">
                       <Sparkles className="w-5 h-5 text-romantic-500" />
                       {LETTER_DATA.salutation}
                     </div>
@@ -130,7 +130,8 @@ export default function LetterSection() {
                     </button>
                   </div>
 
-                  <div className="space-y-3 font-serif text-darkWine text-sm sm:text-base leading-relaxed">
+                  {/* Letter Paragraphs in Dancing Script */}
+                  <div className="space-y-3 font-cursive text-darkWine text-lg sm:text-xl font-bold leading-relaxed">
                     {LETTER_DATA.paragraphs.map((p, idx) => (
                       <p key={idx}>{p}</p>
                     ))}
@@ -141,7 +142,7 @@ export default function LetterSection() {
                   <p className="text-xs font-sans text-romantic-500 italic mb-0.5">
                     {LETTER_DATA.closing}
                   </p>
-                  <p className="font-cursive text-2xl text-romantic-600 font-bold">
+                  <p className="font-cursive text-2xl sm:text-3xl text-romantic-600 font-bold">
                     {LETTER_DATA.sender}
                   </p>
                 </div>
@@ -163,11 +164,11 @@ export default function LetterSection() {
                 <span>Xác Nhận Hẹn Hò</span>
               </div>
 
-              <h3 className="font-serif text-2xl sm:text-4xl text-darkWine font-bold mb-4">
+              <h3 className="font-sans text-2xl sm:text-4xl text-darkWine font-extrabold mb-3 tracking-tight">
                 Em Đồng Ý Đi Hẹn Hò Chứ?
               </h3>
 
-              <p className="text-romantic-800 text-sm sm:text-base font-sans leading-relaxed mb-8 max-w-md mx-auto">
+              <p className="text-romantic-800 text-base sm:text-lg font-cursive font-bold leading-relaxed mb-8 max-w-md mx-auto">
                 Một buổi tối lãng mạn ngày 25/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé! ✨
               </p>
             </div>
@@ -227,7 +228,7 @@ export default function LetterSection() {
                 <CheckCircle2 className="w-10 h-10 text-romantic-500" />
               </div>
 
-              <h3 className="font-serif text-3xl text-darkWine font-bold mb-3">
+              <h3 className="font-sans text-3xl text-darkWine font-extrabold mb-3">
                 Tuyệt Vời Quá! 🎉
               </h3>
 

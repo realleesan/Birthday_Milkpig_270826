@@ -13,14 +13,14 @@ export default function GallerySection() {
   return (
     <section id="gallery-section" className="py-24 px-4 bg-cream relative">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+        {/* Header (Dancing Script Heading) */}
         <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-3 tracking-tight"
+            className="font-cursive text-4xl sm:text-6xl text-romantic-600 font-bold mb-3"
           >
             Những Khoảnh Khắc Đẹp Nhất
           </motion.h2>
@@ -30,7 +30,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-cursive text-xl sm:text-2xl text-romantic-600 font-bold max-w-xl mx-auto"
+            className="text-romantic-800 text-sm sm:text-base font-sans font-medium max-w-xl mx-auto"
           >
             Mỗi bức ảnh Polaroid lưu giữ một mảnh ký ức ngọt ngào mà chúng ta đã cùng viết nên.
           </motion.p>
@@ -67,7 +67,7 @@ export default function GallerySection() {
                   </div>
                 </div>
 
-                {/* Polaroid Bottom Text - Dancing Script handwritten font */}
+                {/* Polaroid Bottom Text */}
                 <div className="text-center pt-2">
                   <h3 className="font-cursive text-2xl text-darkWine font-bold truncate">
                     {photo.title}

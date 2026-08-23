@@ -44,14 +44,14 @@ export default function LetterSection() {
   return (
     <section id="letter-section" className="py-24 px-4 bg-romantic-gradient relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header (Dancing Script Heading Accent) */}
         <div className="text-center mb-12">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-3 tracking-tight"
+            className="font-cursive text-4xl sm:text-6xl text-romantic-600 font-bold mb-3"
           >
             Lời Nhắn Nhủ & Lời Hẹn Hò
           </motion.h2>
@@ -61,7 +61,7 @@ export default function LetterSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.1 }}
-            className="font-cursive text-xl sm:text-2xl text-romantic-600 font-bold max-w-xl mx-auto"
+            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Mở bức thư tay dành riêng cho Milkpig và phản hồi cho buổi hẹn hò lãng mạn ngày 25/8 nhé!
           </motion.p>
@@ -70,7 +70,7 @@ export default function LetterSection() {
         {/* 2 Column Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
           
-          {/* Left Column: Digital Interactive Handwritten Letter */}
+          {/* Left Column: Digital Interactive Letter */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -109,7 +109,7 @@ export default function LetterSection() {
                 </div>
               </motion.div>
             ) : (
-              /* Opened Handwritten Letter Card (Dancing Script) */
+              /* Opened Handwritten Letter Card (Body in Inter font-sans for clarity) */
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -130,8 +130,8 @@ export default function LetterSection() {
                     </button>
                   </div>
 
-                  {/* Letter Paragraphs in Dancing Script */}
-                  <div className="space-y-3 font-cursive text-darkWine text-lg sm:text-xl font-bold leading-relaxed">
+                  {/* Letter Content Paragraphs in Inter Font for 100% legibility */}
+                  <div className="space-y-3 font-sans text-darkWine text-sm sm:text-base leading-relaxed font-medium">
                     {LETTER_DATA.paragraphs.map((p, idx) => (
                       <p key={idx}>{p}</p>
                     ))}
@@ -168,7 +168,7 @@ export default function LetterSection() {
                 Em Đồng Ý Đi Hẹn Hò Chứ?
               </h3>
 
-              <p className="text-romantic-800 text-base sm:text-lg font-cursive font-bold leading-relaxed mb-8 max-w-md mx-auto">
+              <p className="text-romantic-800 text-sm sm:text-base font-sans font-medium leading-relaxed mb-8 max-w-md mx-auto">
                 Một buổi tối lãng mạn ngày 25/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé! ✨
               </p>
             </div>
@@ -228,11 +228,11 @@ export default function LetterSection() {
                 <CheckCircle2 className="w-10 h-10 text-romantic-500" />
               </div>
 
-              <h3 className="font-sans text-3xl text-darkWine font-extrabold mb-3">
+              <h3 className="font-cursive text-4xl text-darkWine font-bold mb-3">
                 Tuyệt Vời Quá! 🎉
               </h3>
 
-              <p className="text-romantic-800 text-base font-sans leading-relaxed mb-6">
+              <p className="text-romantic-800 text-base font-sans font-medium leading-relaxed mb-6">
                 Hẹn gặp Milkpig vào lúc <strong className="text-romantic-600 font-bold">17:00 ngày 25/8/2026</strong>. Chuyến xe lãng mạn sẽ đón công chúa đúng giờ! 💖
               </p>
 

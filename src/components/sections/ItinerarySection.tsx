@@ -32,7 +32,7 @@ export default function ItinerarySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-200 text-romantic-800 text-xs sm:text-sm font-semibold mb-4"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-200 text-romantic-800 text-xs sm:text-sm font-sans font-bold mb-4"
           >
             <MapPin className="w-4 h-4 text-romantic-600" />
             <span>Lịch Trình Hẹn Hò 25/8</span>
@@ -53,7 +53,7 @@ export default function ItinerarySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans"
+            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Một buổi tối trọn vẹn với từng khoảnh khắc được chuẩn bị tỉ mỉ để tạo nên ký ức đáng nhớ nhất.
           </motion.p>
@@ -89,14 +89,14 @@ export default function ItinerarySection() {
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />
                       {item.tag && (
-                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-darkWine/80 backdrop-blur-md text-white text-xs font-semibold">
+                        <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-darkWine/80 backdrop-blur-md text-white text-xs font-sans font-bold">
                           {item.tag}
                         </span>
                       )}
                     </div>
 
-                    {/* Time & Title */}
-                    <div className="flex items-center gap-2 text-romantic-600 text-xs font-bold mb-1">
+                    {/* Time & Title - Inter Font for step times */}
+                    <div className="flex items-center gap-2 text-romantic-600 text-xs font-sans font-extrabold mb-1">
                       <Clock className="w-3.5 h-3.5" />
                       <span>{item.time}</span>
                     </div>
@@ -105,13 +105,13 @@ export default function ItinerarySection() {
                       {item.title}
                     </h3>
 
-                    <p className="text-romantic-800 text-xs sm:text-sm leading-relaxed mb-4">
+                    <p className="text-romantic-800 text-xs sm:text-sm font-sans leading-relaxed mb-4">
                       {item.description}
                     </p>
 
                     {/* Location & Map button */}
-                    <div className="flex items-center justify-between pt-3 border-t border-romantic-200 text-xs text-romantic-700">
-                      <span className="flex items-center gap-1 font-semibold">
+                    <div className="flex items-center justify-between pt-3 border-t border-romantic-200 text-xs text-romantic-700 font-sans">
+                      <span className="flex items-center gap-1 font-bold">
                         <MapPin className="w-3.5 h-3.5 text-romantic-500" />
                         {item.location}
                       </span>

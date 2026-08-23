@@ -51,7 +51,7 @@ export default function LetterSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-200 text-romantic-800 text-xs sm:text-sm font-semibold mb-4"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-200 text-romantic-800 text-xs sm:text-sm font-sans font-bold mb-4"
           >
             <Mail className="w-4 h-4 text-romantic-600" />
             <span>Letter From Heart & RSVP</span>
@@ -72,7 +72,7 @@ export default function LetterSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans"
+            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Mở bức thư tay dành riêng cho Milkpig và phản hồi cho buổi hẹn hò lãng mạn ngày 25/8 nhé!
           </motion.p>
@@ -107,13 +107,13 @@ export default function LetterSection() {
                   <h3 className="font-cursive text-3xl text-darkWine font-bold mb-2">
                     Gửi: Milkpig 💖
                   </h3>
-                  <p className="text-xs text-romantic-500 italic">
+                  <p className="text-xs font-sans text-romantic-500 italic">
                     (Bấm vào đây để mở thư tay)
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between text-xs text-romantic-600 font-semibold pt-4 border-t border-romantic-200">
-                  <span className="flex items-center gap-1">
+                <div className="flex items-center justify-between text-xs font-sans text-romantic-600 font-bold pt-4 border-t border-romantic-200">
+                  <span className="flex items-center gap-1 font-sans font-bold">
                     <Feather className="w-3.5 h-3.5 text-romantic-500" /> Letter 27.08.2026
                   </span>
                   <span className="underline">Mở phong bì ✨</span>
@@ -135,7 +135,7 @@ export default function LetterSection() {
                     </div>
                     <button
                       onClick={() => setIsLetterOpen(false)}
-                      className="text-xs text-romantic-500 hover:text-romantic-800 underline font-semibold"
+                      className="text-xs font-sans text-romantic-500 hover:text-romantic-800 underline font-bold"
                     >
                       Đóng thư
                     </button>
@@ -149,7 +149,7 @@ export default function LetterSection() {
                 </div>
 
                 <div className="mt-6 pt-4 border-t border-romantic-200 text-right">
-                  <p className="text-xs text-romantic-500 italic mb-0.5">
+                  <p className="text-xs font-sans text-romantic-500 italic mb-0.5">
                     {LETTER_DATA.closing}
                   </p>
                   <p className="font-cursive text-2xl text-romantic-600 font-bold">
@@ -169,7 +169,7 @@ export default function LetterSection() {
             className="glass-card rounded-3xl p-8 border-2 border-romantic-300 shadow-romantic-glow flex flex-col items-center text-center justify-between min-h-[360px] bg-gradient-to-br from-white/90 to-romantic-50/70"
           >
             <div className="w-full">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-romantic-100 text-romantic-700 text-xs font-semibold mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-romantic-100 text-romantic-700 text-xs font-sans font-bold mb-4">
                 <PartyPopper className="w-3.5 h-3.5 text-romantic-500" />
                 <span>Xác Nhận Hẹn Hò</span>
               </div>
@@ -178,7 +178,7 @@ export default function LetterSection() {
                 Em Đồng Ý Đi Hẹn Hò Chứ?
               </h3>
 
-              <p className="text-romantic-800 text-sm sm:text-base leading-relaxed mb-8 max-w-md mx-auto">
+              <p className="text-romantic-800 text-sm sm:text-base font-sans leading-relaxed mb-8 max-w-md mx-auto">
                 Một buổi tối lãng mạn ngày 25/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé! ✨
               </p>
             </div>
@@ -190,7 +190,7 @@ export default function LetterSection() {
                 whileHover={{ scale: 1.06, boxShadow: '0 20px 40px rgba(255, 59, 102, 0.4)' }}
                 whileTap={{ scale: 0.95 }}
                 onClick={triggerConfetti}
-                className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-romantic-500 via-romantic-600 to-roseGold text-white font-bold text-base shadow-romantic-glow flex items-center justify-center gap-3"
+                className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-romantic-500 via-romantic-600 to-roseGold text-white font-sans font-bold text-base shadow-romantic-glow flex items-center justify-center gap-3"
               >
                 <Heart className="w-5 h-5 fill-white text-white animate-bounce" />
                 <span>Đồng Ý Ngay! 💖</span>
@@ -202,7 +202,7 @@ export default function LetterSection() {
                 transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                 onMouseEnter={handleDodgeNo}
                 onClick={handleDodgeNo}
-                className="w-full sm:w-auto px-6 py-3.5 rounded-full glass-card text-romantic-600 font-semibold text-sm border border-romantic-300 shadow-sm"
+                className="w-full sm:w-auto px-6 py-3.5 rounded-full glass-card text-romantic-600 font-sans font-bold text-sm border border-romantic-300 shadow-sm"
               >
                 Để xem đã 😜
               </motion.button>
@@ -242,13 +242,13 @@ export default function LetterSection() {
                 Tuyệt Vời Quá! 🎉
               </h3>
 
-              <p className="text-romantic-800 text-base leading-relaxed mb-6 font-sans">
+              <p className="text-romantic-800 text-base font-sans leading-relaxed mb-6">
                 Hẹn gặp Milkpig vào lúc <strong className="text-romantic-600 font-bold">17:00 ngày 25/8/2026</strong>. Chuyến xe lãng mạn sẽ đón công chúa đúng giờ! 💖
               </p>
 
               <button
                 onClick={() => setShowCelebration(false)}
-                className="px-6 py-3 rounded-full bg-romantic-500 text-white font-bold text-sm shadow-md hover:bg-romantic-600 transition-colors inline-flex items-center gap-2"
+                className="px-6 py-3 rounded-full bg-romantic-500 text-white font-sans font-bold text-sm shadow-md hover:bg-romantic-600 transition-colors inline-flex items-center gap-2"
               >
                 <Sparkles className="w-4 h-4" /> Đóng cửa sổ
               </button>

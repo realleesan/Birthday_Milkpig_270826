@@ -20,7 +20,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-100 text-romantic-700 text-xs sm:text-sm font-semibold mb-4"
+            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-100 text-romantic-700 text-xs sm:text-sm font-sans font-bold mb-4"
           >
             <Camera className="w-4 h-4 text-romantic-500" />
             <span>Memories Gallery</span>
@@ -41,7 +41,7 @@ export default function GallerySection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans"
+            className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Mỗi bức ảnh Polaroid lưu giữ một mảnh ký ức ngọt ngào mà chúng ta đã cùng viết nên.
           </motion.p>
@@ -83,7 +83,7 @@ export default function GallerySection() {
                   <h3 className="font-cursive text-xl text-darkWine font-bold truncate">
                     {photo.title}
                   </h3>
-                  <p className="text-xs text-romantic-500 font-sans mt-0.5 flex items-center justify-center gap-1">
+                  <p className="text-xs text-romantic-500 font-sans font-bold mt-0.5 flex items-center justify-center gap-1">
                     <Heart className="w-3 h-3 fill-romantic-300 text-romantic-300" />
                     {photo.date}
                   </p>

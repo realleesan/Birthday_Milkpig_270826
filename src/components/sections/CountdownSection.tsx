@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, CalendarHeart, Sparkles, CloudSun, MapPin, Thermometer, Droplets, Wind, Umbrella, Heart, Loader2 } from 'lucide-react';
+import { Clock, Sparkles, CloudSun, MapPin, Thermometer, Droplets, Wind, Umbrella, Heart, Loader2 } from 'lucide-react';
 import { COUNTDOWN_TARGET } from '@/data/birthdayData';
 import { CountdownTime } from '@/types';
 
@@ -54,7 +54,7 @@ export default function CountdownSection() {
     return () => clearInterval(interval);
   }, []);
 
-  // 2. Fetch Pure Live Weather Data for Hanoi (Latitude 21.0285, Longitude 105.8542) from Open-Meteo API
+  // 2. Fetch Pure Live Weather Data for Hanoi from Open-Meteo API
   useEffect(() => {
     const fetchHanoiWeather = async () => {
       try {
@@ -103,24 +103,13 @@ export default function CountdownSection() {
   return (
     <section id="countdown-section" className="py-20 px-4 bg-cream relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header (Top badge removed) */}
         <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-100 text-romantic-700 text-xs sm:text-sm font-semibold mb-4"
-          >
-            <CalendarHeart className="w-4 h-4 text-romantic-500" />
-            <span className="font-sans font-bold">The Special Date: 25/8/2026</span>
-          </motion.div>
-
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.7 }}
             className="font-sans text-3xl sm:text-5xl text-darkWine font-extrabold mb-4 tracking-tight"
           >
             Đếm Ngược & Thời Tiết Hà Nội Realtime
@@ -130,7 +119,7 @@ export default function CountdownSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Dữ liệu thời tiết trực tiếp từ trạm khí tượng Hà Nội và đồng hồ đếm ngược ngày hẹn hò.
@@ -159,12 +148,12 @@ export default function CountdownSection() {
                 </span>
               </div>
 
-              {/* Countdown Number Cards - Inter Font for crisp readability */}
+              {/* Countdown Number Cards */}
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 my-6">
                 {timeBlocks.map((block, index) => (
                   <div
                     key={index}
-                    className="relative p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform"
+                    className="relative p-4 rounded-2xl bg-white/80 border border-romantic-200 shadow-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform"
                   >
                     <span className="font-sans text-4xl sm:text-5xl font-extrabold text-romantic-600 mb-1 tracking-tight">
                       {String(block.value).padStart(2, '0')}
@@ -213,7 +202,7 @@ export default function CountdownSection() {
                     </span>
                   </div>
 
-                  {/* Weather Main Info Card - Inter Font for digits */}
+                  {/* Weather Main Info Card */}
                   <div className="flex items-center gap-6 p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm mb-6">
                     <div className="p-3.5 rounded-2xl bg-romantic-100 text-romantic-600 flex items-center justify-center">
                       <CloudSun className="w-12 h-12 text-romantic-500 animate-float-slow" />
@@ -233,25 +222,25 @@ export default function CountdownSection() {
                     </div>
                   </div>
 
-                  {/* Detailed Metrics Grid - Inter Font for numbers */}
+                  {/* Detailed Metrics Grid */}
                   <div className="grid grid-cols-2 gap-3 mb-4 text-xs font-sans">
-                    <div className="p-3 rounded-xl bg-white/80 border border-romantic-100 flex items-center gap-2.5">
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
                       <Thermometer className="w-4 h-4 text-romantic-500 shrink-0" />
                       <div>
-                        <p className="text-romantic-500 font-bold text-[10px]">Nhiệt độ ngày</p>
+                        <p className="text-romantic-400 font-bold text-[10px]">Nhiệt độ ngày</p>
                         <p className="font-sans font-extrabold text-darkWine text-sm">{weather.tempMin}°C - {weather.tempMax}°C</p>
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/80 border border-romantic-100 flex items-center gap-2.5">
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
                       <Droplets className="w-4 h-4 text-romantic-500 shrink-0" />
                       <div>
-                        <p className="text-romantic-500 font-bold text-[10px]">Độ ẩm</p>
+                        <p className="text-romantic-400 font-bold text-[10px]">Độ ẩm</p>
                         <p className="font-sans font-extrabold text-darkWine text-sm">{weather.humidity}%</p>
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/80 border border-romantic-100 flex items-center gap-2.5">
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
                       <Wind className="w-4 h-4 text-romantic-500 shrink-0" />
                       <div>
                         <p className="text-romantic-400 font-bold text-[10px]">Gió</p>
@@ -259,7 +248,7 @@ export default function CountdownSection() {
                       </div>
                     </div>
 
-                    <div className="p-3 rounded-xl bg-white/80 border border-romantic-100 flex items-center gap-2.5">
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
                       <Umbrella className="w-4 h-4 text-romantic-500 shrink-0" />
                       <div>
                         <p className="text-romantic-400 font-bold text-[10px]">Khả năng mưa</p>

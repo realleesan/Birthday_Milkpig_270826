@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { GALLERY_DATA } from '@/data/birthdayData';
 import { GalleryPhoto } from '@/types';
 import LightboxModal from '@/components/LightboxModal';
-import { Camera, Heart, ZoomIn } from 'lucide-react';
+import { Heart, ZoomIn } from 'lucide-react';
 
 export default function GallerySection() {
   const [selectedPhoto, setSelectedPhoto] = useState<GalleryPhoto | null>(null);
@@ -13,24 +13,13 @@ export default function GallerySection() {
   return (
     <section id="gallery-section" className="py-24 px-4 bg-cream relative">
       <div className="max-w-6xl mx-auto">
-        {/* Header */}
+        {/* Header (Top badge removed) */}
         <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-100 text-romantic-700 text-xs sm:text-sm font-sans font-bold mb-4"
-          >
-            <Camera className="w-4 h-4 text-romantic-500" />
-            <span>Memories Gallery</span>
-          </motion.div>
-
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.7 }}
             className="font-serif text-3xl sm:text-5xl text-darkWine font-bold mb-4"
           >
             Những Khoảnh Khắc Đẹp Nhất
@@ -40,7 +29,7 @@ export default function GallerySection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Mỗi bức ảnh Polaroid lưu giữ một mảnh ký ức ngọt ngào mà chúng ta đã cùng viết nên.

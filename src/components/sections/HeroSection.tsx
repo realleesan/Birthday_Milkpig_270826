@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, Heart, ChevronDown, Calendar, Cake } from 'lucide-react';
+import { Heart, ChevronDown, Calendar, Cake } from 'lucide-react';
 import { HERO_DATA } from '@/data/birthdayData';
 
 // Register ScrollTrigger plugin
@@ -189,25 +189,13 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Hero Overlay Content (Centered Over Canvas) */}
+        {/* Hero Overlay Content (Centered Over Canvas, Top Badge Removed) */}
         <div className="relative z-20 max-w-4xl w-full mx-auto px-4 text-center flex flex-col items-center justify-center my-auto">
-          {/* Top Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="inline-flex items-center gap-2 px-5 py-2 rounded-full glass-card-dark text-romantic-200 text-xs sm:text-sm font-semibold mb-6 shadow-2xl backdrop-blur-md border border-white/20"
-          >
-            <Sparkles className="w-4 h-4 text-romantic-400 animate-pulse" />
-            <span>{HERO_DATA.ageTitle}</span>
-            <Sparkles className="w-4 h-4 text-romantic-400 animate-pulse" />
-          </motion.div>
-
           {/* Main Title */}
           <motion.h1
             initial={{ opacity: 0, y: 25 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.2 }}
+            transition={{ duration: 0.9, delay: 0.1 }}
             className="font-serif text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-bold leading-tight tracking-tight mb-6 drop-shadow-2xl"
           >
             Happy Birthday <br />
@@ -220,8 +208,8 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-8 text-xs sm:text-base"
+            transition={{ duration: 0.8, delay: 0.3 }}
+            className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 mb-8 text-xs sm:text-base font-sans"
           >
             <div className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-card-dark text-white shadow-lg border border-romantic-300/30">
               <Cake className="w-4 h-4 text-romantic-400" />
@@ -240,7 +228,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
             className="text-romantic-100/90 text-sm sm:text-lg max-w-2xl mx-auto mb-10 leading-relaxed font-sans drop-shadow"
           >
             {HERO_DATA.subheading}
@@ -250,14 +238,14 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
+            transition={{ duration: 0.8, delay: 0.5 }}
             className="flex flex-col items-center"
           >
             <motion.button
               whileHover={{ scale: 1.06, boxShadow: '0 20px 40px rgba(255, 59, 102, 0.5)' }}
               whileTap={{ scale: 0.96 }}
               onClick={onExploreClick}
-              className="group relative px-9 py-4 rounded-full bg-gradient-to-r from-romantic-500 via-romantic-600 to-roseGold text-white font-bold text-base sm:text-lg shadow-romantic-glow flex items-center gap-3 overflow-hidden border border-white/20"
+              className="group relative px-9 py-4 rounded-full bg-gradient-to-r from-romantic-500 via-romantic-600 to-roseGold text-white font-sans font-bold text-base sm:text-lg shadow-romantic-glow flex items-center gap-3 overflow-hidden border border-white/20"
             >
               <span className="relative z-10 flex items-center gap-2">
                 Khám Phá Bí Mật

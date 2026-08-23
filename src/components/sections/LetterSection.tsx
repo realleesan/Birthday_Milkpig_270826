@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import { LETTER_DATA } from '@/data/birthdayData';
-import { Mail, Heart, Sparkles, Feather, PartyPopper, CheckCircle2, X } from 'lucide-react';
+import { Heart, Sparkles, Feather, PartyPopper, CheckCircle2, X } from 'lucide-react';
 
 export default function LetterSection() {
   const [isLetterOpen, setIsLetterOpen] = useState(false);
@@ -44,24 +44,13 @@ export default function LetterSection() {
   return (
     <section id="letter-section" className="py-24 px-4 bg-romantic-gradient relative overflow-hidden">
       <div className="max-w-6xl mx-auto">
-        {/* Section Header */}
+        {/* Section Header (Top badge removed) */}
         <div className="text-center mb-12">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-romantic-200 text-romantic-800 text-xs sm:text-sm font-sans font-bold mb-4"
-          >
-            <Mail className="w-4 h-4 text-romantic-600" />
-            <span>Letter From Heart & RSVP</span>
-          </motion.div>
-
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
+            transition={{ duration: 0.7 }}
             className="font-serif text-3xl sm:text-5xl text-darkWine font-bold mb-4"
           >
             Lời Nhắn Nhủ & Lời Hẹn Hò
@@ -71,7 +60,7 @@ export default function LetterSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: 0.1 }}
             className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
             Mở bức thư tay dành riêng cho Milkpig và phản hồi cho buổi hẹn hò lãng mạn ngày 25/8 nhé!

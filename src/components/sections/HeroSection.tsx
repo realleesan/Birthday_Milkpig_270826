@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useEffect, useRef, useState, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useEffect, useRef, useCallback } from 'react';
+import { motion } from 'framer-motion';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Sparkles, Heart, ChevronDown, Calendar, Cake, Loader2 } from 'lucide-react';
+import { Sparkles, Heart, ChevronDown, Calendar, Cake } from 'lucide-react';
 import { HERO_DATA } from '@/data/birthdayData';
 
 // Register ScrollTrigger plugin
@@ -25,10 +25,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
   
   const imagesRef = useRef<HTMLImageElement[]>([]);
   const currentFrameRef = useRef<number>(0);
-  
-  const [loadingProgress, setLoadingProgress] = useState<number>(0);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [currentFrameNum, setCurrentFrameNum] = useState<number>(1);
+  const hasTriggeredMusicRef = useRef<boolean>(false);
 
   // Get Frame URL pattern
   const getFrameUrl = (index: number) => {
@@ -46,7 +43,6 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     const img = imagesRef.current[index];
     if (!img || !img.complete || img.naturalWidth === 0) return;
 
-    // Get current window/canvas dimensions
     const canvasWidth = canvas.width;
     const canvasHeight = canvas.height;
 
@@ -71,7 +67,6 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     }
 
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-    setCurrentFrameNum(index + 1);
   }, []);
 
   // Update canvas resolution dynamically on window resize
@@ -83,12 +78,10 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     renderFrame(currentFrameRef.current);
   }, [renderFrame]);
 
-  // 1. Preload 80 images into RAM array
+  // 1. Preload 80 images into RAM array silently
   useEffect(() => {
-    let loadedCount = 0;
     const images: HTMLImageElement[] = [];
 
-    // Set initial canvas resolution
     if (canvasRef.current) {
       canvasRef.current.width = window.innerWidth;
       canvasRef.current.height = window.innerHeight;
@@ -99,27 +92,8 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
       img.src = getFrameUrl(i);
       
       img.onload = () => {
-        loadedCount++;
-        const progress = Math.round((loadedCount / TOTAL_FRAMES) * 100);
-        setLoadingProgress(progress);
-
-        // Render frame 0 as preview as soon as loaded
         if (i === 0) {
           renderFrame(0);
-        }
-
-        if (loadedCount === TOTAL_FRAMES) {
-          setIsLoaded(true);
-          renderFrame(currentFrameRef.current);
-        }
-      };
-
-      img.onerror = () => {
-        loadedCount++;
-        const progress = Math.round((loadedCount / TOTAL_FRAMES) * 100);
-        setLoadingProgress(progress);
-        if (loadedCount === TOTAL_FRAMES) {
-          setIsLoaded(true);
         }
       };
 
@@ -133,7 +107,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
     };
   }, [renderFrame]);
 
-  // 2. Setup GSAP ScrollTrigger
+  // 2. Setup GSAP ScrollTrigger & auto play music when scrolled near end
   useEffect(() => {
     if (!triggerRef.current || !pinnedRef.current) return;
 
@@ -154,6 +128,12 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           currentFrameRef.current = frameIndex;
           renderFrame(frameIndex);
         }
+
+        // Auto trigger music play when user scrolls near the end of 80 frames
+        if (self.progress >= 0.75 && !hasTriggeredMusicRef.current) {
+          hasTriggeredMusicRef.current = true;
+          onExploreClick();
+        }
       },
     });
 
@@ -173,7 +153,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
       clearTimeout(resizeTimeout);
       st.kill();
     };
-  }, [renderFrame, updateCanvasSize]);
+  }, [renderFrame, updateCanvasSize, onExploreClick]);
 
   return (
     <div ref={triggerRef} className="relative w-full h-[300vh] bg-darkWine">
@@ -188,7 +168,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
         />
 
-        {/* Gradient Overlay Vignette for High Text Legibility */}
+        {/* Gradient Overlay Vignette */}
         <div className="absolute inset-0 bg-gradient-to-b from-darkWine/60 via-darkWine/35 to-darkWine/70 z-10 pointer-events-none"></div>
 
         {/* Floating Heart Decor */}
@@ -208,20 +188,6 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
             <Heart className="w-16 h-16 fill-current" />
           </motion.div>
         </div>
-
-        {/* Loading Progress Bar Overlay */}
-        <AnimatePresence>
-          {!isLoaded && (
-            <motion.div
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute top-6 right-6 z-50 flex items-center gap-2 bg-darkWine/90 backdrop-blur-md text-white text-xs px-4 py-2 rounded-full border border-romantic-300/40 shadow-2xl"
-            >
-              <Loader2 className="w-4 h-4 text-romantic-400 animate-spin" />
-              <span>Đang nạp 80 frames ({loadingProgress}%)</span>
-            </motion.div>
-          )}
-        </AnimatePresence>
 
         {/* Hero Overlay Content (Centered Over Canvas) */}
         <div className="relative z-20 max-w-4xl w-full mx-auto px-4 text-center flex flex-col items-center justify-center my-auto">
@@ -299,19 +265,11 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-romantic-600 to-champagne-gold opacity-0 group-hover:opacity-100 transition-opacity"></span>
             </motion.button>
-
-            <p className="mt-3 text-xs text-romantic-300/80 italic drop-shadow">
-              *Cuộn trang để thưởng thức hiệu ứng 80 frame & mở nhạc
-            </p>
           </motion.div>
         </div>
 
-        {/* Bottom Frame Badge & Down Arrow */}
+        {/* Down Arrow */}
         <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 pointer-events-auto">
-          <div className="px-3 py-1 rounded-full bg-darkWine/80 backdrop-blur-md text-romantic-300 text-[11px] font-mono tracking-widest border border-white/10 shadow-lg">
-            FRAME {currentFrameNum}/80
-          </div>
-
           <motion.div
             animate={{ y: [0, 8, 0] }}
             transition={{ duration: 2, repeat: Infinity }}

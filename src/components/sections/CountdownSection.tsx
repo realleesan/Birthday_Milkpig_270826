@@ -2,9 +2,20 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, CalendarHeart, Sparkles, CloudSun, MapPin, Thermometer, Droplets, Wind, Umbrella, Heart } from 'lucide-react';
+import { Clock, CalendarHeart, Sparkles, CloudSun, MapPin, Thermometer, Droplets, Wind, Umbrella, Heart, Loader2 } from 'lucide-react';
 import { COUNTDOWN_TARGET } from '@/data/birthdayData';
 import { CountdownTime } from '@/types';
+
+interface WeatherData {
+  temp: number;
+  feelsLike: number;
+  tempMax: number;
+  tempMin: number;
+  humidity: number;
+  windSpeed: number;
+  rainChance: string;
+  description: string;
+}
 
 export default function CountdownSection() {
   const [timeLeft, setTimeLeft] = useState<CountdownTime>({
@@ -15,6 +26,10 @@ export default function CountdownSection() {
     isPast: false,
   });
 
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [isLoadingWeather, setIsLoadingWeather] = useState<boolean>(true);
+
+  // 1. Real-time Countdown Timer
   useEffect(() => {
     const calculateTime = () => {
       const targetDate = new Date(COUNTDOWN_TARGET).getTime();
@@ -37,6 +52,45 @@ export default function CountdownSection() {
     calculateTime();
     const interval = setInterval(calculateTime, 1000);
     return () => clearInterval(interval);
+  }, []);
+
+  // 2. Fetch Pure Live Weather Data for Hanoi (Latitude 21.0285, Longitude 105.8542) from Open-Meteo API
+  useEffect(() => {
+    const fetchHanoiWeather = async () => {
+      try {
+        setIsLoadingWeather(true);
+        const res = await fetch(
+          'https://api.open-meteo.com/v1/forecast?latitude=21.0285&longitude=105.8542&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FBangkok'
+        );
+        const data = await res.json();
+
+        if (data && data.current) {
+          const wCode = data.current.weather_code;
+          let desc = 'Thời tiết dịu mát 🍃';
+          if (wCode === 0) desc = 'Trời quang mây tạnh ☀️';
+          else if (wCode >= 1 && wCode <= 3) desc = 'Mây dịu nhẹ, thoáng mát ⛅';
+          else if (wCode >= 51 && wCode <= 67) desc = 'Có mưa phun nhẹ 🌧️';
+          else if (wCode >= 80) desc = 'Mưa rào 🌦️';
+
+          setWeather({
+            temp: Math.round(data.current.temperature_2m),
+            feelsLike: Math.round(data.current.apparent_temperature),
+            tempMax: Math.round(data.daily.temperature_2m_max[0]),
+            tempMin: Math.round(data.daily.temperature_2m_min[0]),
+            humidity: data.current.relative_humidity_2m,
+            windSpeed: Math.round(data.current.wind_speed_10m),
+            rainChance: data.current.precipitation > 0 ? 'Có mưa' : '0% (Khô ráo)',
+            description: desc,
+          });
+        }
+      } catch (err) {
+        console.error('Weather API Error:', err);
+      } finally {
+        setIsLoadingWeather(false);
+      }
+    };
+
+    fetchHanoiWeather();
   }, []);
 
   const timeBlocks = [
@@ -69,7 +123,7 @@ export default function CountdownSection() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="font-serif text-3xl sm:text-5xl text-darkWine font-bold mb-4"
           >
-            Đếm Ngược & Thời Tiết Ngày Hẹn Hò
+            Đếm Ngược & Thời Tiết Hà Nội Realtime
           </motion.h2>
 
           <motion.p
@@ -79,7 +133,7 @@ export default function CountdownSection() {
             transition={{ duration: 0.7, delay: 0.2 }}
             className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans"
           >
-            Mọi thứ đã sẵn sàng cho một buổi tối thu Hà Nội dịu mát và tràn ngập niềm vui.
+            Dữ liệu thời tiết trực tiếp từ trạm khí tượng Hà Nội và đồng hồ đếm ngược ngày hẹn hò.
           </motion.p>
         </div>
 
@@ -133,7 +187,7 @@ export default function CountdownSection() {
             </div>
           </motion.div>
 
-          {/* Right Column: Hanoi Weather Forecast (25/8) */}
+          {/* Right Column: Live Hanoi Weather Forecast API */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -141,74 +195,87 @@ export default function CountdownSection() {
             transition={{ duration: 0.8 }}
             className="glass-card rounded-3xl p-6 sm:p-8 border border-romantic-200 shadow-romantic-glow flex flex-col justify-between bg-gradient-to-br from-white/90 to-romantic-50/70"
           >
-            <div>
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-romantic-200">
-                <span className="font-serif text-xl text-darkWine font-bold flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-romantic-500" />
-                  Dự Báo Thời Tiết Hà Nội
-                </span>
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-champagne-light text-roseGold-dark border border-champagne/40">
-                  25/08/2026
-                </span>
+            {isLoadingWeather || !weather ? (
+              <div className="flex flex-col items-center justify-center h-full min-h-[250px]">
+                <Loader2 className="w-8 h-8 text-romantic-500 animate-spin mb-3" />
+                <p className="text-xs text-romantic-600 font-semibold">Đang kết nối API thời tiết Hà Nội...</p>
               </div>
-
-              {/* Weather Main Info Card */}
-              <div className="flex items-center gap-6 p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm mb-6">
-                <div className="p-3.5 rounded-2xl bg-romantic-100 text-romantic-600 flex items-center justify-center">
-                  <CloudSun className="w-12 h-12 text-romantic-500 animate-float-slow" />
-                </div>
+            ) : (
+              <>
                 <div>
-                  <div className="flex items-baseline gap-2">
-                    <span className="font-serif text-4xl font-bold text-darkWine">28°C</span>
-                    <span className="text-xs text-romantic-500 font-semibold">(Cảm giác như 27°C)</span>
+                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-romantic-200">
+                    <span className="font-serif text-xl text-darkWine font-bold flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-romantic-500" />
+                      Thời Tiết Hà Nội Trực Tiếp
+                    </span>
+                    <span className="text-xs font-bold px-3 py-1 rounded-full bg-champagne-light text-roseGold-dark border border-champagne/40">
+                      Live API
+                    </span>
                   </div>
-                  <p className="text-xs sm:text-sm font-semibold text-romantic-700 mt-1">
-                    Nắng nhẹ mùa thu, gió dịu mát về đêm 🍃
-                  </p>
-                </div>
-              </div>
 
-              {/* Detailed Metrics Grid */}
-              <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
-                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
-                  <Thermometer className="w-4 h-4 text-romantic-500" />
-                  <div>
-                    <p className="text-romantic-400 font-medium text-[10px]">Nhiệt độ ngày</p>
-                    <p className="font-bold text-darkWine">26°C - 30°C</p>
+                  {/* Weather Main Info Card */}
+                  <div className="flex items-center gap-6 p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm mb-6">
+                    <div className="p-3.5 rounded-2xl bg-romantic-100 text-romantic-600 flex items-center justify-center">
+                      <CloudSun className="w-12 h-12 text-romantic-500 animate-float-slow" />
+                    </div>
+                    <div>
+                      <div className="flex items-baseline gap-2">
+                        <span className="font-serif text-4xl font-bold text-darkWine">
+                          {weather.temp}°C
+                        </span>
+                        <span className="text-xs text-romantic-500 font-semibold">
+                          (Cảm giác như {weather.feelsLike}°C)
+                        </span>
+                      </div>
+                      <p className="text-xs sm:text-sm font-semibold text-romantic-700 mt-1">
+                        {weather.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Detailed Metrics Grid */}
+                  <div className="grid grid-cols-2 gap-3 mb-4 text-xs">
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                      <Thermometer className="w-4 h-4 text-romantic-500" />
+                      <div>
+                        <p className="text-romantic-400 font-medium text-[10px]">Nhiệt độ ngày</p>
+                        <p className="font-bold text-darkWine">{weather.tempMin}°C - {weather.tempMax}°C</p>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                      <Droplets className="w-4 h-4 text-romantic-500" />
+                      <div>
+                        <p className="text-romantic-400 font-medium text-[10px]">Độ ẩm</p>
+                        <p className="font-bold text-darkWine">{weather.humidity}%</p>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                      <Wind className="w-4 h-4 text-romantic-500" />
+                      <div>
+                        <p className="text-romantic-400 font-medium text-[10px]">Gió</p>
+                        <p className="font-bold text-darkWine">{weather.windSpeed} km/h</p>
+                      </div>
+                    </div>
+
+                    <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                      <Umbrella className="w-4 h-4 text-romantic-500" />
+                      <div>
+                        <p className="text-romantic-400 font-medium text-[10px]">Khả năng mưa</p>
+                        <p className="font-bold text-darkWine">{weather.rainChance}</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
-                  <Droplets className="w-4 h-4 text-romantic-500" />
-                  <div>
-                    <p className="text-romantic-400 font-medium text-[10px]">Độ ẩm</p>
-                    <p className="font-bold text-darkWine">68% (Thoáng mát)</p>
-                  </div>
+                {/* Note Footer */}
+                <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 text-xs text-romantic-600 font-semibold bg-romantic-100/50 p-3 rounded-xl">
+                  <Heart className="w-4 h-4 text-romantic-500 fill-romantic-400" />
+                  <span>Dữ liệu thời gian thực từ trạm khí tượng Hà Nội Open-Meteo 🍷</span>
                 </div>
-
-                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
-                  <Wind className="w-4 h-4 text-romantic-500" />
-                  <div>
-                    <p className="text-romantic-400 font-medium text-[10px]">Gió thu</p>
-                    <p className="font-bold text-darkWine">12 km/h (Nhẹ nhàng)</p>
-                  </div>
-                </div>
-
-                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
-                  <Umbrella className="w-4 h-4 text-romantic-500" />
-                  <div>
-                    <p className="text-romantic-400 font-medium text-[10px]">Khả năng mưa</p>
-                    <p className="font-bold text-darkWine">10% (Khô ráo)</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Note Footer */}
-            <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 text-xs text-romantic-600 font-semibold bg-romantic-100/50 p-3 rounded-xl">
-              <Heart className="w-4 h-4 text-romantic-500 fill-romantic-400" />
-              <span>Thời tiết lý tưởng cho bữa tối lãng mạn & ngắm view phố 🍷</span>
-            </div>
+              </>
+            )}
           </motion.div>
 
         </div>

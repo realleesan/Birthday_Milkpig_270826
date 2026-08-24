@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import HeroSection from '@/components/sections/HeroSection';
 import CountdownSection from '@/components/sections/CountdownSection';
 import ItinerarySection from '@/components/sections/ItinerarySection';
+import MapSection from '@/components/sections/MapSection';
 import GallerySection from '@/components/sections/GallerySection';
 import LetterSection from '@/components/sections/LetterSection';
 import MusicPlayer from '@/components/MusicPlayer';
@@ -38,6 +39,9 @@ export default function Home() {
 
       {/* Section 03: Interactive Itinerary */}
       <ItinerarySection />
+
+      {/* Section 03.5: Realtime Interactive Route Map */}
+      <MapSection />
 
       {/* Section 04: Memories Gallery */}
       <GallerySection />

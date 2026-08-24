@@ -8,6 +8,9 @@ export interface ItineraryItem {
   googleMapsUrl?: string;
   tag?: string;
   iconName?: 'Heart' | 'Utensils' | 'Coffee' | 'Gift' | 'Sparkles' | 'Car' | 'Camera';
+  lat?: number;
+  lng?: number;
+  distanceFromPrev?: string;
 }
 
 export interface GalleryPhoto {

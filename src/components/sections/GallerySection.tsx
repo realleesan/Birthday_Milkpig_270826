@@ -113,7 +113,7 @@ export default function GallerySection() {
                       setActiveIndex(index);
                     }
                   }}
-                  className="absolute w-[240px] sm:w-[320px] aspect-[3/4] rounded-3xl overflow-hidden shadow-2xl border-4 border-white cursor-pointer group select-none bg-white"
+                  className="absolute w-[240px] sm:w-[320px] aspect-[3/4] overflow-hidden shadow-2xl border-none rounded-none cursor-pointer group select-none bg-black"
                   style={{
                     transformStyle: 'preserve-3d',
                   }}
@@ -121,7 +121,7 @@ export default function GallerySection() {
                   <img
                     src={photo.image}
                     alt={photo.title}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 rounded-none border-none"
                   />
 
                   {/* Zoom Overlay on Hover for Center Slide */}
@@ -155,7 +155,7 @@ export default function GallerySection() {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Pure Image Lightbox Modal (No caption, unrounded, borderless) */}
       <LightboxModal photo={selectedPhoto} onClose={() => setSelectedPhoto(null)} />
     </section>
   );

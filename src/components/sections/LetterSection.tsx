@@ -94,7 +94,7 @@ export default function LetterSection() {
                   </div>
 
                   <h3 className="font-cursive text-3xl sm:text-4xl text-darkWine font-bold mb-2">
-                    Gửi: Milkpig 💖
+                    Gửi: Milkpig
                   </h3>
                   <p className="text-xs font-sans text-romantic-500 italic">
                     (Bấm vào đây để mở thư tay)
@@ -105,7 +105,7 @@ export default function LetterSection() {
                   <span className="flex items-center gap-1 font-sans font-bold">
                     <Feather className="w-3.5 h-3.5 text-romantic-500" /> Letter 27.08.2026
                   </span>
-                  <span className="underline">Mở phong bì ✨</span>
+                  <span className="underline">Mở phong bì</span>
                 </div>
               </motion.div>
             ) : (
@@ -150,7 +150,7 @@ export default function LetterSection() {
             )}
           </motion.div>
 
-          {/* Right Column: RSVP "Em Đồng Ý Đi Hẹn Hò Chứ?" */}
+          {/* Right Column: RSVP "Em Đồng Ý Đi Hẹn Hò Chứ?" (Heading in Dancing Script) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -164,12 +164,13 @@ export default function LetterSection() {
                 <span>Xác Nhận Hẹn Hò</span>
               </div>
 
-              <h3 className="font-sans text-2xl sm:text-4xl text-darkWine font-extrabold mb-3 tracking-tight">
+              {/* Heading changed to Dancing Script as requested */}
+              <h3 className="font-cursive text-3xl sm:text-5xl text-darkWine font-bold mb-3">
                 Em Đồng Ý Đi Hẹn Hò Chứ?
               </h3>
 
               <p className="text-romantic-800 text-sm sm:text-base font-sans font-medium leading-relaxed mb-8 max-w-md mx-auto">
-                Một buổi tối lãng mạn ngày 27/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé! ✨
+                Một buổi tối lãng mạn ngày 27/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé!
               </p>
             </div>
 
@@ -183,7 +184,7 @@ export default function LetterSection() {
                 className="w-full sm:w-auto px-8 py-4 rounded-full bg-gradient-to-r from-romantic-500 via-romantic-600 to-roseGold text-white font-sans font-bold text-base shadow-romantic-glow flex items-center justify-center gap-3"
               >
                 <Heart className="w-5 h-5 fill-white text-white animate-bounce" />
-                <span>Đồng Ý Ngay! 💖</span>
+                <span>Đồng Ý Ngay!</span>
               </motion.button>
 
               {/* NO Button (Playfully Dodges) */}
@@ -194,7 +195,7 @@ export default function LetterSection() {
                 onClick={handleDodgeNo}
                 className="w-full sm:w-auto px-6 py-3.5 rounded-full glass-card text-romantic-600 font-sans font-bold text-sm border border-romantic-300 shadow-sm"
               >
-                Để xem đã 😜
+                Để xem đã
               </motion.button>
             </div>
           </motion.div>
@@ -229,11 +230,11 @@ export default function LetterSection() {
               </div>
 
               <h3 className="font-cursive text-4xl text-darkWine font-bold mb-3">
-                Tuyệt Vời Quá! 🎉
+                Tuyệt Vời Quá!
               </h3>
 
               <p className="text-romantic-800 text-base font-sans font-medium leading-relaxed mb-6">
-                Hẹn gặp Milkpig vào lúc <strong className="text-romantic-600 font-bold">17:00 ngày 27/8/2026</strong>. Chuyến xe lãng mạn sẽ đón công chúa đúng giờ! 💖
+                Hẹn gặp Milkpig vào lúc <strong className="text-romantic-600 font-bold">17:00 ngày 27/8/2026</strong>. Chuyến xe lãng mạn sẽ đón công chúa đúng giờ!
               </p>
 
               <button

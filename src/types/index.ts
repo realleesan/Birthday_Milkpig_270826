@@ -7,7 +7,7 @@ export interface ItineraryItem {
   image: string;
   googleMapsUrl?: string;
   tag?: string;
-  iconName?: 'Heart' | 'Utensils' | 'Coffee' | 'Gift' | 'Sparkles' | 'Car';
+  iconName?: 'Heart' | 'Utensils' | 'Coffee' | 'Gift' | 'Sparkles' | 'Car' | 'Camera';
 }
 
 export interface GalleryPhoto {

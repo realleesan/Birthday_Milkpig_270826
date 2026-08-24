@@ -2,30 +2,27 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ITINERARY_DATA } from '@/data/birthdayData';
-import { Navigation, MapPin, Clock, Route, Compass, Heart } from 'lucide-react';
+import { ITINERARY_DATA, SEAFOOD_OPTIONS } from '@/data/birthdayData';
+import { Navigation, MapPin, Clock, Route, Utensils } from 'lucide-react';
 import { ItineraryItem } from '@/types';
 
 export default function MapSection() {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const mapInstanceRef = useRef<any>(null);
   const [selectedStep, setSelectedStep] = useState<ItineraryItem>(ITINERARY_DATA[0]);
-  const [isMapLoaded, setIsMapLoaded] = useState<boolean>(false);
 
-  // Total route statistics
-  const totalDistance = '11.7 km';
+  // Total route statistics based on actual Hanoi locations
+  const totalDistance = '~20.1 km';
   const totalTime = '6 tiếng (17:00 - 23:00)';
   const totalStops = ITINERARY_DATA.length;
 
   useEffect(() => {
     if (typeof window === 'undefined' || !mapContainerRef.current) return;
 
-    // Dynamically import Leaflet client-side to prevent Next.js SSR build errors
     let isMounted = true;
 
     const initMap = async () => {
       try {
-        // Load Leaflet CSS if not already added
         if (!document.getElementById('leaflet-css')) {
           const cssLink = document.createElement('link');
           cssLink.id = 'leaflet-css';
@@ -38,19 +35,16 @@ export default function MapSection() {
 
         if (!isMounted || !mapContainerRef.current) return;
 
-        // Destroy previous instance if re-initializing
         if (mapInstanceRef.current) {
           mapInstanceRef.current.remove();
         }
 
-        // Center map around Hanoi (21.038, 105.845)
         const map = L.map(mapContainerRef.current, {
-          center: [21.038, 105.845],
+          center: [21.045, 105.805],
           zoom: 13,
           zoomControl: false,
         });
 
-        // Add sleek CartoDB Voyager tiles for modern aesthetic
         L.tileLayer(
           'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
           {
@@ -61,10 +55,8 @@ export default function MapSection() {
           }
         ).addTo(map);
 
-        // Add custom Zoom control in bottom right
         L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-        // Collect coordinates for Polyline
         const latLngs: [number, number][] = [];
 
         // Add Numbered Markers for each Chặng
@@ -73,13 +65,12 @@ export default function MapSection() {
             const point: [number, number] = [item.lat, item.lng];
             latLngs.push(point);
 
-            // Custom Numbered Pink Badge Marker Icon
             const customIcon = L.divIcon({
               className: 'custom-map-marker',
               html: `
                 <div style="
-                  width: 36px;
-                  height: 36px;
+                  width: 38px;
+                  height: 38px;
                   background: linear-gradient(135deg, #FF3B66, #E07A5F);
                   color: white;
                   border-radius: 50%;
@@ -89,41 +80,80 @@ export default function MapSection() {
                   font-weight: 800;
                   font-family: sans-serif;
                   font-size: 14px;
-                  box-shadow: 0 8px 16px rgba(255, 59, 102, 0.4);
+                  box-shadow: 0 8px 18px rgba(255, 59, 102, 0.45);
                   border: 3px solid white;
                   cursor: pointer;
-                  transition: transform 0.2s ease;
                 ">
                   ${index + 1}
                 </div>
               `,
-              iconSize: [36, 36],
-              iconAnchor: [18, 18],
+              iconSize: [38, 38],
+              iconAnchor: [19, 19],
             });
 
             const marker = L.marker(point, { icon: customIcon }).addTo(map);
 
-            // Custom Leaflet Popup Content
             const popupContent = `
-              <div style="font-family: sans-serif; padding: 4px; max-width: 200px;">
+              <div style="font-family: sans-serif; padding: 4px; max-width: 220px;">
                 <div style="font-size: 11px; font-weight: 800; color: #FF3B66; margin-bottom: 2px;">
                   ${item.time} • Step ${index + 1}
                 </div>
                 <div style="font-size: 13px; font-weight: 800; color: #2B0B14; margin-bottom: 4px;">
                   ${item.title}
                 </div>
-                <div style="font-size: 11px; color: #666; margin-bottom: 6px;">
+                <div style="font-size: 11px; color: #555; margin-bottom: 6px;">
                   📍 ${item.location}
                 </div>
+                ${
+                  item.googleMapsUrl
+                    ? `<a href="${item.googleMapsUrl}" target="_blank" style="display: inline-block; font-size: 11px; font-weight: 800; color: #FF3B66; text-decoration: underline;">Mở Google Maps &rarr;</a>`
+                    : ''
+                }
               </div>
             `;
 
             marker.bindPopup(popupContent);
-
             marker.on('click', () => {
               setSelectedStep(item);
             });
           }
+        });
+
+        // Add 3 Seafood Option Pins for Step 3
+        SEAFOOD_OPTIONS.forEach((opt, i) => {
+          const optIcon = L.divIcon({
+            className: 'seafood-marker',
+            html: `
+              <div style="
+                width: 28px;
+                height: 28px;
+                background: #E07A5F;
+                color: white;
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: 700;
+                font-size: 11px;
+                border: 2px solid white;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+              ">
+                🍽️
+              </div>
+            `,
+            iconSize: [28, 28],
+            iconAnchor: [14, 14],
+          });
+
+          const optMarker = L.marker([opt.lat, opt.lng], { icon: optIcon }).addTo(map);
+          optMarker.bindPopup(`
+            <div style="font-family: sans-serif; padding: 4px; max-width: 200px;">
+              <div style="font-size: 10px; font-weight: 800; color: #E07A5F;">Lựa Chọn Hải Sản ${i + 1}</div>
+              <div style="font-size: 12px; font-weight: 800; color: #2B0B14;">${opt.name}</div>
+              <div style="font-size: 10px; color: #666; margin-top: 2px;">📍 ${opt.address}</div>
+              <a href="${opt.googleMapsUrl}" target="_blank" style="font-size: 10px; color: #FF3B66; font-weight: 800; margin-top: 4px; display: inline-block;">Đường đi Google Maps &rarr;</a>
+            </div>
+          `);
         });
 
         // Draw Polyline Route connecting Ping 1 -> 2 -> 3 -> 4 -> 5
@@ -131,18 +161,16 @@ export default function MapSection() {
           const polyline = L.polyline(latLngs, {
             color: '#FF3B66',
             weight: 4,
-            opacity: 0.8,
+            opacity: 0.85,
             dashArray: '8, 8',
           }).addTo(map);
 
-          // Fit bounds to fit all markers cleanly
           map.fitBounds(polyline.getBounds(), { padding: [40, 40] });
         }
 
         mapInstanceRef.current = map;
-        setIsMapLoaded(true);
       } catch (err) {
-        console.error('Leaflet initialization error:', err);
+        console.error('Leaflet map error:', err);
       }
     };
 
@@ -157,7 +185,6 @@ export default function MapSection() {
     };
   }, []);
 
-  // Center map on selected step
   const handleSelectStep = (step: ItineraryItem) => {
     setSelectedStep(step);
     if (mapInstanceRef.current && step.lat && step.lng) {
@@ -189,7 +216,7 @@ export default function MapSection() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-romantic-800 text-sm sm:text-base font-sans font-medium max-w-xl mx-auto"
           >
-            Tích hợp bản đồ vệ tinh kết nối đường đi trực tiếp giữa 5 chặng hẹn hò lãng mạn ngày 27/8.
+            Tích hợp bản đồ trực tiếp nối liền 5 địa điểm thực tế từ Phú Diễn, Trần Quốc Hoàn đến Hồ Tây.
           </motion.p>
         </div>
 

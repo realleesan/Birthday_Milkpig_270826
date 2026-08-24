@@ -1,5 +1,14 @@
 import { ItineraryItem, GalleryPhoto } from '@/types';
 
+export interface SeafoodOption {
+  id: string;
+  name: string;
+  address: string;
+  lat: number;
+  lng: number;
+  googleMapsUrl: string;
+}
+
 export const HERO_DATA = {
   recipientName: 'Milkpig',
   birthDateDisplay: '27.08.2026',
@@ -13,73 +22,103 @@ export const HERO_DATA = {
 
 export const COUNTDOWN_TARGET = '2026-08-27T17:00:00+07:00'; // 5:00 PM on Aug 27, 2026
 
+export const SEAFOOD_OPTIONS: SeafoodOption[] = [
+  {
+    id: 'opt1',
+    name: 'Poseidon Vincom Skylake',
+    address: 'Tầng 3, TTTM Vincom Plaza Skylake, Phạm Hùng, Mỹ Đình',
+    lat: 21.0185,
+    lng: 105.7825,
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Poseidon+Vincom+Plaza+Skylake+My+Dinh',
+  },
+  {
+    id: 'opt2',
+    name: 'Cửu Vân Long Premium',
+    address: 'Tầng 3, TTTM Hanoi Centre, 175 Nguyễn Thái Học, Đống Đa',
+    lat: 21.0298,
+    lng: 105.8320,
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Cuu+Van+Long+175+Nguyen+Thai+Hoc',
+  },
+  {
+    id: 'opt3',
+    name: 'Sen Tây Hồ Quốc Tế',
+    address: '614 Lạc Long Quân, Tây Hồ, Hà Nội',
+    lat: 21.0820,
+    lng: 105.8190,
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Sen+Tay+Ho+614+Lac+Long+Quan',
+  },
+];
+
 export const ITINERARY_DATA: ItineraryItem[] = [
   {
     id: '1',
     time: '17:00',
     title: 'Chặng 1: Đón Công Chúa',
-    location: 'Nhà heo con',
-    description: 'Bắt đầu chuyến hành trình với nụ cười rạng rỡ và một chiếc ôm thật ấm áp.',
+    location: 'Số 42 Ngõ 55 Nguyễn Đạo An, Phú Diễn',
+    description: 'Bắt đầu chuyến hành trình tại tổ ấm đón bé heo xinh đẹp với chiếc ôm thật ấm áp.',
     image: '/pics/1787587601373_110981064692002214_480708516939942791_eeb651cb7dd3b0780b1145d0f11db06a.jpg',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=42+Ngo+55+Nguyen+Dao+An+Phu+Dien',
     iconName: 'Car',
     tag: 'Khởi đầu',
-    lat: 21.0285,
-    lng: 105.8542,
+    lat: 21.0482,
+    lng: 105.7605,
     distanceFromPrev: '0 km',
   },
   {
     id: '2',
     time: '18:00',
     title: 'Chặng 2: Photobooth Kỷ Niệm',
-    location: 'Tiệm Photobooth Phố Cổ',
-    description: 'Cùng nhau chụp những bức ảnh xinh xắn, nhí nhảnh lưu giữ khoảnh khắc tuổi 21 đáng nhớ.',
+    location: 'Red Button Booth - 2 Ngõ 69 Trần Quốc Hoàn',
+    description: 'Ghé Red Button Booth chụp bộ ảnh xinh xắn nhí nhảnh lưu giữ tuổi 21 đáng nhớ.',
     image: '/pics/1787587601301_110981064692002214_480708516939942791_32c4ce7092753cdadf2e274d13383792.jpg',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Red+Button+Booth+2+Ngo+69+Tran+Quoc+Hoan',
     iconName: 'Camera',
     tag: 'Check-in',
-    lat: 21.0335,
-    lng: 105.8500,
-    distanceFromPrev: '1.2 km',
+    lat: 21.0392,
+    lng: 105.7865,
+    distanceFromPrev: '3.2 km',
   },
   {
     id: '3',
     time: '19:30',
     title: 'Chặng 3: Bữa Tối Buffet Hải Sản',
-    location: 'Cửu Vân Long / Poseidon / Sen Hồ Tây',
-    description: 'Thưởng thức tiệc buffet hải sản tươi ngon mê li, nâng ly chúc mừng tuổi 21 thật rực rỡ.',
+    location: 'Poseidon / Cửu Vân Long / Sen Tây Hồ',
+    description: 'Thưởng thức tiệc buffet hải sản tươi ngon mê li tại 1 trong 3 địa điểm tuyệt vời nhất Hà Nội.',
     image: '/pics/1787587374327_110981064692002214_480708516939942791_036dbca6834532da3158d3109d1a6cb0.jpg',
-    googleMapsUrl: 'https://maps.google.com',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Poseidon+Vincom+Plaza+Skylake+My+Dinh',
     iconName: 'Utensils',
     tag: 'Buffet Seafood',
-    lat: 21.0650,
-    lng: 105.8200,
-    distanceFromPrev: '4.5 km',
+    lat: 21.0298,
+    lng: 105.8320,
+    distanceFromPrev: '5.2 km',
   },
   {
     id: '4',
     time: '21:30',
     title: 'Chặng 4: Lượn Phố Tiêu Thức Ăn',
-    location: 'Cung đường Phan Đình Phùng - Hồ Tây',
-    description: 'Cùng nhau vi vu qua những con phố dịu mát, ngắm thành phố về đêm và trò chuyện tâm sự.',
+    location: 'Cung đường lãng mạn Hồ Tây',
+    description: 'Cùng nhau vi vu lượn Hồ Tây dịu mát, ngắm thành phố về đêm và hóng gió tâm sự.',
     image: '/pics/1787587601362_110981064692002214_480708516939942791_404ac55695f75d75041f7f42b5e2ddfa.jpg',
-    googleMapsUrl: 'https://maps.google.com',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Ho+Tay+Ha+Noi',
     iconName: 'Coffee',
     tag: 'City Walk',
-    lat: 21.0390,
-    lng: 105.8360,
-    distanceFromPrev: '3.8 km',
+    lat: 21.0550,
+    lng: 105.8280,
+    distanceFromPrev: '4.2 km',
   },
   {
     id: '5',
     time: '23:00',
     title: 'Chặng 5: Về Ôm Ấp Ngủ',
-    location: 'Tổ ấm ngọt ngào',
+    location: 'Tổ ấm (42 Ngõ 55 Nguyễn Đạo An)',
     description: 'Khép lại một ngày sinh nhật trọn vẹn, cùng nhau chìm vào giấc ngủ thật ấm áp và bình yên.',
     image: '/pics/1787587472744_110981064692002214_480708516939942791_b3998ef2290359d6edead2b1fa4fc1d0.jpg',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=42+Ngo+55+Nguyen+Dao+An+Phu+Dien',
     iconName: 'Gift',
     tag: 'Sweet Dreams',
-    lat: 21.0285,
-    lng: 105.8542,
-    distanceFromPrev: '2.2 km',
+    lat: 21.0482,
+    lng: 105.7605,
+    distanceFromPrev: '7.5 km',
   },
 ];
 

@@ -1,12 +1,14 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ITINERARY_DATA, SEAFOOD_OPTIONS } from '@/data/birthdayData';
-import { MapPin, ExternalLink, Clock, Car, Utensils, Coffee, Gift, Camera, Sparkles, Navigation } from 'lucide-react';
+import { MapPin, ExternalLink, Clock, Car, Utensils, Coffee, Gift, Camera, Sparkles, ChevronDown } from 'lucide-react';
 import { ItineraryItem } from '@/types';
 
 export default function ItinerarySection() {
+  const [showSeafoodDetails, setShowSeafoodDetails] = useState(true);
+
   const getIcon = (iconName?: string) => {
     switch (iconName) {
       case 'Car':
@@ -28,7 +30,7 @@ export default function ItinerarySection() {
     <section id="itinerary-section" className="py-24 px-4 bg-romantic-gradient relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-14">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -50,8 +52,8 @@ export default function ItinerarySection() {
           </motion.p>
         </div>
 
-        {/* Clean 5-Step Responsive Grid Layout */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 items-stretch">
+        {/* 5-Step Balanced Responsive Grid Layout - Uniform Heights */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5">
           {ITINERARY_DATA.map((item: ItineraryItem, index: number) => {
             const isSeafoodStep = item.id === '3';
 
@@ -62,11 +64,11 @@ export default function ItinerarySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
-                className="glass-card rounded-2xl p-5 border border-romantic-200 shadow-romantic-glow hover:-translate-y-1.5 transition-all flex flex-col justify-between group overflow-hidden"
+                className="glass-card rounded-2xl p-5 border border-romantic-200 shadow-romantic-glow hover:-translate-y-1.5 transition-all flex flex-col justify-between group overflow-hidden bg-white/90"
               >
                 <div>
                   {/* Step Image */}
-                  <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3 bg-romantic-100">
+                  <div className="relative w-full h-40 rounded-xl overflow-hidden mb-4 bg-romantic-100">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -93,37 +95,23 @@ export default function ItinerarySection() {
                     {item.description}
                   </p>
 
-                  {/* Special 3 Seafood Restaurant Options for Step 3 */}
+                  {/* Sleek Seafood Option Badge in Step 3 */}
                   {isSeafoodStep && (
-                    <div className="mb-4 bg-romantic-50/90 p-3 rounded-xl border border-romantic-200 flex flex-col gap-2">
-                      <div className="text-[11px] font-sans font-extrabold text-romantic-600 uppercase tracking-wider flex items-center gap-1">
-                        <Utensils className="w-3 h-3" /> 3 Lựa Chọn Hấp Dẫn:
-                      </div>
-                      <div className="flex flex-col gap-1.5 text-[11px] font-sans text-darkWine">
-                        {SEAFOOD_OPTIONS.map((opt, i) => (
-                          <div key={opt.id} className="bg-white p-2 rounded-lg border border-romantic-100 shadow-2xs">
-                            <div className="font-bold text-romantic-700 flex items-center justify-between">
-                              <span>{i + 1}. {opt.name}</span>
-                              <a
-                                href={opt.googleMapsUrl}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-romantic-500 hover:text-romantic-700 underline text-[10px]"
-                              >
-                                Maps &rarr;
-                              </a>
-                            </div>
-                            <div className="text-[10px] text-romantic-800/80 leading-tight mt-0.5">
-                              📍 {opt.address}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                    <div className="mb-3">
+                      <button
+                        onClick={() => setShowSeafoodDetails(!showSeafoodDetails)}
+                        className="w-full py-2 px-3 rounded-xl bg-romantic-50 hover:bg-romantic-100 border border-romantic-200 text-romantic-600 text-xs font-sans font-bold flex items-center justify-between transition-colors shadow-2xs"
+                      >
+                        <span className="flex items-center gap-1.5">
+                          <Utensils className="w-3.5 h-3.5 text-romantic-500" /> 3 Lựa chọn nhà hàng
+                        </span>
+                        <ChevronDown className={`w-3.5 h-3.5 transition-transform ${showSeafoodDetails ? 'rotate-180' : ''}`} />
+                      </button>
                     </div>
                   )}
                 </div>
 
-                {/* Location & Map link */}
+                {/* Location & Map Link */}
                 <div className="pt-3 border-t border-romantic-200 text-xs text-romantic-700 font-sans flex flex-col gap-1.5 mt-auto">
                   <div className="flex items-start gap-1 font-bold text-[11px] text-romantic-700 leading-snug">
                     <MapPin className="w-3.5 h-3.5 text-romantic-500 shrink-0 mt-0.5" />
@@ -145,6 +133,59 @@ export default function ItinerarySection() {
             );
           })}
         </div>
+
+        {/* Dedicated 3-Column Seafood Restaurant Options Panel */}
+        {showSeafoodDetails && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="mt-8 glass-card rounded-3xl p-6 sm:p-8 border-2 border-romantic-200/90 shadow-2xl bg-white/95"
+          >
+            <div className="flex flex-col sm:flex-row items-center justify-between mb-6 pb-4 border-b border-romantic-100 gap-3">
+              <div>
+                <h4 className="font-cursive text-3xl sm:text-4xl text-romantic-600 font-bold flex items-center gap-2">
+                  <Utensils className="w-6 h-6 text-romantic-500" /> 3 Lựa Chọn Nhà Hàng Buffet Hải Sản Cho Chặng 3
+                </h4>
+                <p className="text-romantic-800 text-xs sm:text-sm font-sans font-medium mt-1">
+                  Vợ yêu thích chọn địa điểm nào thì mình sẽ ghé thưởng thức tiệc hải sản ở đó nhé!
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {SEAFOOD_OPTIONS.map((opt, i) => (
+                <div
+                  key={opt.id}
+                  className="p-4 sm:p-5 rounded-2xl border border-romantic-200/90 bg-romantic-50/50 hover:bg-white hover:border-romantic-400 hover:shadow-lg transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    <div className="inline-block px-3 py-1 rounded-full bg-romantic-600 text-white text-[11px] font-sans font-bold mb-3 shadow-xs">
+                      Lựa chọn {i + 1}
+                    </div>
+                    <h5 className="font-bold text-darkWine text-base sm:text-lg mb-2 group-hover:text-romantic-600 transition-colors">
+                      {opt.name}
+                    </h5>
+                    <p className="text-xs sm:text-sm text-romantic-700 leading-relaxed font-sans mb-4 flex items-start gap-1.5">
+                      <MapPin className="w-4 h-4 text-romantic-500 shrink-0 mt-0.5" />
+                      <span>{opt.address}</span>
+                    </p>
+                  </div>
+
+                  <a
+                    href={opt.googleMapsUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-romantic-600 hover:bg-romantic-700 text-white text-xs font-sans font-bold transition-all shadow-sm group-hover:shadow-md"
+                  >
+                    <span>Mở Google Maps chỉ đường</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
       </div>
     </section>
   );

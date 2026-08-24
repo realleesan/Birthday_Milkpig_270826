@@ -21,15 +21,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: 'Milkpig Birthday 27/8 & Special Date 25/8 | Mừng Sinh Nhật 27 Tuổi',
-  description: 'Trang chúc mừng sinh nhật lãng mạn dành riêng cho Milkpig tuổi 27 kèm lộ trình hẹn hò đặc biệt ngày 25/8.',
+  title: 'Milkpig Birthday 27/8 & Special Date 27/8 | Mừng Sinh Nhật Tuổi 21',
+  description: 'Trang chúc mừng sinh nhật lãng mạn dành riêng cho Milkpig tuổi 21 kèm lộ trình hẹn hò đặc biệt ngày 27/8.',
   icons: {
     icon: '/icon.svg',
     shortcut: '/favicon.svg',
     apple: '/icon.svg',
   },
   openGraph: {
-    title: 'Happy 27th Birthday Milkpig 💖',
+    title: 'Happy 21st Birthday Milkpig 💖',
     description: 'Một bất ngờ lãng mạn dành riêng cho em!',
     type: 'website',
   },

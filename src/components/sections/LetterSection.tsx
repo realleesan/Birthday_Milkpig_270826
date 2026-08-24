@@ -63,7 +63,7 @@ export default function LetterSection() {
             transition={{ duration: 0.7, delay: 0.1 }}
             className="text-romantic-800 text-sm sm:text-base max-w-xl mx-auto font-sans font-medium"
           >
-            Mở bức thư tay dành riêng cho Milkpig và phản hồi cho buổi hẹn hò lãng mạn ngày 25/8 nhé!
+            Mở bức thư tay dành riêng cho Milkpig và phản hồi cho buổi hẹn hò lãng mạn ngày 27/8 nhé!
           </motion.p>
         </div>
 
@@ -169,7 +169,7 @@ export default function LetterSection() {
               </h3>
 
               <p className="text-romantic-800 text-sm sm:text-base font-sans font-medium leading-relaxed mb-8 max-w-md mx-auto">
-                Một buổi tối lãng mạn ngày 25/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé! ✨
+                Một buổi tối lãng mạn ngày 27/8 đang chờ đợi Milkpig. Hãy bấm nút xác nhận bên dưới nhé! ✨
               </p>
             </div>
 
@@ -233,7 +233,7 @@ export default function LetterSection() {
               </h3>
 
               <p className="text-romantic-800 text-base font-sans font-medium leading-relaxed mb-6">
-                Hẹn gặp Milkpig vào lúc <strong className="text-romantic-600 font-bold">17:00 ngày 25/8/2026</strong>. Chuyến xe lãng mạn sẽ đón công chúa đúng giờ! 💖
+                Hẹn gặp Milkpig vào lúc <strong className="text-romantic-600 font-bold">17:00 ngày 27/8/2026</strong>. Chuyến xe lãng mạn sẽ đón công chúa đúng giờ! 💖
               </p>
 
               <button

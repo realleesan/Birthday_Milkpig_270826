@@ -144,7 +144,7 @@ export default function CountdownSection() {
                   Đồng Hồ Đếm Ngược
                 </span>
                 <span className="text-xs font-sans font-bold px-3 py-1 rounded-full bg-romantic-100 text-romantic-700">
-                  Target: 25.08.2026
+                  Target: 27.08.2026
                 </span>
               </div>
 
@@ -172,7 +172,7 @@ export default function CountdownSection() {
             {/* Note Footer */}
             <div className="pt-4 border-t border-romantic-200 flex items-center justify-center gap-2 font-sans text-xs sm:text-sm text-romantic-600 font-bold bg-romantic-50/50 p-3 rounded-xl">
               <Clock className="w-4 h-4 text-romantic-500 animate-pulse shrink-0" />
-              <span>Hẹn gặp Milkpig đúng 17:00 ngày 25.08.2026 💖</span>
+              <span>Hẹn gặp Milkpig đúng 17:00 ngày 27.08.2026 💖</span>
             </div>
           </motion.div>
 

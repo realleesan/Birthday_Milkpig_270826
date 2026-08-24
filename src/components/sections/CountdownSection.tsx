@@ -129,7 +129,7 @@ export default function CountdownSection() {
         {/* 2 Column Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
-          {/* Left Column: Real-time Countdown Timer (2x2 Grid) */}
+          {/* Left Column: Real-time Countdown Timer (Dancing Script Card Title) */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -139,8 +139,8 @@ export default function CountdownSection() {
           >
             <div>
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-romantic-200">
-                <span className="font-sans text-xl text-darkWine font-bold flex items-center gap-2">
-                  <Clock className="w-5 h-5 text-romantic-500" />
+                <span className="font-cursive text-2xl sm:text-3xl text-darkWine font-bold flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-romantic-500 shrink-0" />
                   Đồng Hồ Đếm Ngược
                 </span>
                 <span className="text-xs font-sans font-bold px-3 py-1 rounded-full bg-romantic-100 text-romantic-700">
@@ -148,7 +148,7 @@ export default function CountdownSection() {
                 </span>
               </div>
 
-              {/* 2x2 Grid for Countdown Boxes - Fills height perfectly & clean UI */}
+              {/* 2x2 Grid for Countdown Boxes */}
               <div className="grid grid-cols-2 gap-4 my-2">
                 {timeBlocks.map((block, index) => (
                   <div
@@ -176,7 +176,7 @@ export default function CountdownSection() {
             </div>
           </motion.div>
 
-          {/* Right Column: Live Hanoi Weather Forecast API */}
+          {/* Right Column: Live Hanoi Weather Forecast API (Dancing Script Card Title) */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -193,8 +193,8 @@ export default function CountdownSection() {
               <>
                 <div>
                   <div className="flex items-center justify-between mb-4 pb-4 border-b border-romantic-200">
-                    <span className="font-sans text-xl text-darkWine font-bold flex items-center gap-2">
-                      <MapPin className="w-5 h-5 text-romantic-500" />
+                    <span className="font-cursive text-2xl sm:text-3xl text-darkWine font-bold flex items-center gap-2">
+                      <MapPin className="w-5 h-5 text-romantic-500 shrink-0" />
                       Thời Tiết Hà Nội Trực Tiếp
                     </span>
                     <span className="text-xs font-sans font-bold px-3 py-1 rounded-full bg-champagne-light text-roseGold-dark border border-champagne/40">

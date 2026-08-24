@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ITINERARY_DATA } from '@/data/birthdayData';
-import { MapPin, ExternalLink, Clock, Car, Utensils, Coffee, Gift, Sparkles } from 'lucide-react';
+import { MapPin, ExternalLink, Clock, Car, Utensils, Coffee, Gift, Camera, Sparkles } from 'lucide-react';
 import { ItineraryItem } from '@/types';
 
 export default function ItinerarySection() {
@@ -11,6 +11,8 @@ export default function ItinerarySection() {
     switch (iconName) {
       case 'Car':
         return <Car className="w-4 h-4" />;
+      case 'Camera':
+        return <Camera className="w-4 h-4" />;
       case 'Utensils':
         return <Utensils className="w-4 h-4" />;
       case 'Coffee':
@@ -24,8 +26,8 @@ export default function ItinerarySection() {
 
   return (
     <section id="itinerary-section" className="py-24 px-4 bg-romantic-gradient relative overflow-hidden">
-      <div className="max-w-6xl mx-auto">
-        {/* Section Header (Dancing Script Heading) */}
+      <div className="max-w-7xl mx-auto">
+        {/* Section Header */}
         <div className="text-center mb-16">
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -48,8 +50,8 @@ export default function ItinerarySection() {
           </motion.p>
         </div>
 
-        {/* Clean 4-Column Horizontal Layout Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 items-stretch">
+        {/* Clean 5-Step Responsive Grid Layout - No text cutoff, Dancing Script for step titles */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-5 items-stretch">
           {ITINERARY_DATA.map((item: ItineraryItem, index: number) => {
             return (
               <motion.div
@@ -62,7 +64,7 @@ export default function ItinerarySection() {
               >
                 <div>
                   {/* Step Image */}
-                  <div className="relative w-full h-40 rounded-xl overflow-hidden mb-4 bg-romantic-100">
+                  <div className="relative w-full h-36 rounded-xl overflow-hidden mb-3 bg-romantic-100">
                     <img
                       src={item.image}
                       alt={item.title}
@@ -74,34 +76,35 @@ export default function ItinerarySection() {
                     </div>
                   </div>
 
-                  {/* Time & Title */}
-                  <div className="flex items-center gap-1.5 text-romantic-600 text-xs font-sans font-extrabold mb-1.5">
+                  {/* Time & Title (Title in Dancing Script font-cursive, no text truncation cutoff) */}
+                  <div className="flex items-center gap-1.5 text-romantic-600 text-xs font-sans font-extrabold mb-1">
                     <Clock className="w-3.5 h-3.5" />
                     <span>{item.time}</span>
                   </div>
 
-                  <h3 className="font-sans text-lg text-darkWine font-extrabold mb-2 tracking-tight line-clamp-1">
+                  <h3 className="font-cursive text-2xl text-darkWine font-bold mb-2 leading-snug">
                     {item.title}
                   </h3>
 
-                  <p className="text-romantic-800 text-xs font-sans leading-relaxed mb-4 line-clamp-3">
+                  {/* Full description display - NO line-clamp truncation */}
+                  <p className="text-romantic-800 text-xs font-sans leading-relaxed mb-4">
                     {item.description}
                   </p>
                 </div>
 
-                {/* Location & Map button */}
-                <div className="pt-3 border-t border-romantic-200 text-xs text-romantic-700 font-sans flex items-center justify-between mt-auto">
-                  <span className="flex items-center gap-1 font-bold truncate max-w-[140px]">
-                    <MapPin className="w-3.5 h-3.5 text-romantic-500 shrink-0" />
-                    <span className="truncate">{item.location}</span>
-                  </span>
+                {/* Location & Map button - Full text display, no truncation cutoff */}
+                <div className="pt-3 border-t border-romantic-200 text-xs text-romantic-700 font-sans flex flex-col gap-1.5 mt-auto">
+                  <div className="flex items-start gap-1 font-bold text-[11px] text-romantic-700 leading-snug">
+                    <MapPin className="w-3.5 h-3.5 text-romantic-500 shrink-0 mt-0.5" />
+                    <span>{item.location}</span>
+                  </div>
 
                   {item.googleMapsUrl && (
                     <a
                       href={item.googleMapsUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 text-romantic-600 hover:text-romantic-800 font-bold hover:underline shrink-0"
+                      className="inline-flex items-center gap-1 text-romantic-600 hover:text-romantic-800 font-bold hover:underline self-end text-[11px]"
                     >
                       Maps <ExternalLink className="w-3 h-3" />
                     </a>

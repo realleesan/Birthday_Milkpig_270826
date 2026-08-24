@@ -189,7 +189,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
           </motion.div>
         </div>
 
-        {/* Hero Overlay Content (Centered Over Canvas, Top Badge Removed) */}
+        {/* Hero Overlay Content */}
         <div className="relative z-20 max-w-4xl w-full mx-auto px-4 text-center flex flex-col items-center justify-center my-auto">
           {/* Main Title */}
           <motion.h1
@@ -219,7 +219,7 @@ export default function HeroSection({ onExploreClick }: HeroSectionProps) {
 
             <div className="flex items-center gap-2 px-4 py-2 rounded-2xl glass-card-dark text-white shadow-lg border border-champagne-gold/40">
               <Calendar className="w-4 h-4 text-champagne-gold" />
-              <span className="font-semibold text-romantic-200">Hẹn Hò Sớm:</span>
+              <span className="font-semibold text-romantic-200">Hẹn Hò:</span>
               <span className="text-champagne-gold font-bold">{HERO_DATA.dateEventDisplay}</span>
             </div>
           </motion.div>

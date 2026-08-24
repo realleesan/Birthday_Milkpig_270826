@@ -33,7 +33,7 @@ export default function Home() {
       {/* Section 01: Hero Teaser */}
       <HeroSection onExploreClick={handleExploreClick} />
 
-      {/* Section 02: Countdown to 25/8 & Hanoi Live Weather */}
+      {/* Section 02: Countdown to 27/8 & Hanoi Live Weather */}
       <CountdownSection />
 
       {/* Section 03: Interactive Itinerary */}
@@ -49,7 +49,7 @@ export default function Home() {
       <footer className="py-10 bg-darkWine text-white text-center border-t border-white/10">
         <div className="max-w-4xl mx-auto px-4">
           <p className="font-cursive text-2xl text-romantic-300 font-bold mb-2 flex items-center justify-center gap-2">
-            Milkpig Birthday 27/8 <Heart className="w-5 h-5 text-romantic-500 fill-romantic-500" /> Date 25/8
+            Milkpig Birthday 27/8 <Heart className="w-5 h-5 text-romantic-500 fill-romantic-500" /> Date 27/8
           </p>
           <p className="text-xs text-romantic-200/70 font-sans">
             Created with endless love & care for Milkpig • 2026

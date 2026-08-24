@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Clock, Sparkles, CloudSun, MapPin, Thermometer, Droplets, Wind, Umbrella, Heart, Loader2 } from 'lucide-react';
+import { Clock, Sparkles, CloudSun, MapPin, Thermometer, Droplets, Wind, Umbrella, Heart, Loader2, Gift, Utensils, Car } from 'lucide-react';
 import { COUNTDOWN_TARGET } from '@/data/birthdayData';
 import { CountdownTime } from '@/types';
 
@@ -129,7 +129,7 @@ export default function CountdownSection() {
         {/* 2 Column Grid Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
           
-          {/* Left Column: Real-time Countdown Timer */}
+          {/* Left Column: Real-time Countdown Timer & Love Milestones */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -138,7 +138,7 @@ export default function CountdownSection() {
             className="glass-card rounded-3xl p-6 sm:p-8 border border-romantic-200 shadow-romantic-glow flex flex-col justify-between"
           >
             <div>
-              <div className="flex items-center justify-between mb-6 pb-4 border-b border-romantic-200">
+              <div className="flex items-center justify-between mb-4 pb-4 border-b border-romantic-200">
                 <span className="font-sans text-xl text-darkWine font-bold flex items-center gap-2">
                   <Clock className="w-5 h-5 text-romantic-500" />
                   Đồng Hồ Đếm Ngược
@@ -149,16 +149,16 @@ export default function CountdownSection() {
               </div>
 
               {/* Countdown Number Cards */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 my-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-5">
                 {timeBlocks.map((block, index) => (
                   <div
                     key={index}
-                    className="relative p-4 rounded-2xl bg-white/80 border border-romantic-200 shadow-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform"
+                    className="relative p-3.5 sm:p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm flex flex-col items-center justify-center group hover:-translate-y-1 transition-transform"
                   >
-                    <span className="font-sans text-4xl sm:text-5xl font-extrabold text-romantic-600 mb-1 tracking-tight">
+                    <span className="font-sans text-3xl sm:text-4xl font-extrabold text-romantic-600 mb-0.5 tracking-tight">
                       {String(block.value).padStart(2, '0')}
                     </span>
-                    <span className="text-[11px] sm:text-xs font-sans font-bold text-romantic-800 uppercase tracking-wider">
+                    <span className="text-[10px] sm:text-xs font-sans font-bold text-romantic-800 uppercase tracking-wider">
                       {block.label}
                     </span>
                     <div className="absolute top-1.5 right-1.5 text-romantic-300 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -166,6 +166,41 @@ export default function CountdownSection() {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Creative 2x2 Love Preparation Status Grid to Perfectly Balance Left Card Height */}
+              <div className="grid grid-cols-2 gap-3 mb-4 text-xs font-sans">
+                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                  <Gift className="w-4 h-4 text-romantic-500 shrink-0" />
+                  <div>
+                    <p className="text-romantic-400 font-bold text-[10px]">Quà sinh nhật</p>
+                    <p className="font-sans font-extrabold text-darkWine text-xs">Bí mật sẵn sàng ✨</p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                  <Utensils className="w-4 h-4 text-romantic-500 shrink-0" />
+                  <div>
+                    <p className="text-romantic-400 font-bold text-[10px]">Bữa tối Steak</p>
+                    <p className="font-sans font-extrabold text-darkWine text-xs">Đã đặt bàn 18:30 🍷</p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                  <Sparkles className="w-4 h-4 text-romantic-500 shrink-0" />
+                  <div>
+                    <p className="text-romantic-400 font-bold text-[10px]">Hoa tươi & Nến</p>
+                    <p className="font-sans font-extrabold text-darkWine text-xs">Đã chuẩn bị 💐</p>
+                  </div>
+                </div>
+
+                <div className="p-3 rounded-xl bg-white/70 border border-romantic-100 flex items-center gap-2.5">
+                  <Car className="w-4 h-4 text-romantic-500 shrink-0" />
+                  <div>
+                    <p className="text-romantic-400 font-bold text-[10px]">Chuyến xe đón</p>
+                    <p className="font-sans font-extrabold text-darkWine text-xs">Sẵn sàng 17:00 🚗</p>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -192,7 +227,7 @@ export default function CountdownSection() {
             ) : (
               <>
                 <div>
-                  <div className="flex items-center justify-between mb-6 pb-4 border-b border-romantic-200">
+                  <div className="flex items-center justify-between mb-4 pb-4 border-b border-romantic-200">
                     <span className="font-sans text-xl text-darkWine font-bold flex items-center gap-2">
                       <MapPin className="w-5 h-5 text-romantic-500" />
                       Thời Tiết Hà Nội Trực Tiếp
@@ -203,7 +238,7 @@ export default function CountdownSection() {
                   </div>
 
                   {/* Weather Main Info Card */}
-                  <div className="flex items-center gap-6 p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm mb-6">
+                  <div className="flex items-center gap-6 p-4 rounded-2xl bg-white/90 border border-romantic-200 shadow-sm mb-5">
                     <div className="p-3.5 rounded-2xl bg-romantic-100 text-romantic-600 flex items-center justify-center">
                       <CloudSun className="w-12 h-12 text-romantic-500 animate-float-slow" />
                     </div>
